@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">FarmConnect</div>
+            <nav>
+                <a href="#" class="active">Dashboard</a>
+                <a href="#">Product Listings</a>
+                <a href="#">Orders</a>
+            </nav>
+            <div class="user-actions">
+                <button><i class="fas fa-cog"></i></button>
+                <button><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard-content">
+
+            <section class="farmer-profile">
+                <div class="profile-header">
+                    <h2>Welcome, [Farmer Name]!</h2>
+                    <button>Edit Profile</button>
+                </div>
+                <div class="profile-content">
+                    <img src="profilepic.jpg" alt="Profile Picture">
+                    <address>
+                        <dl>
+                            <dt>Farm Name:</dt>
+                            <dd>ABCD</dd>
+                            <dt>Location:</dt>
+                            <dd>Pune</dd>
+                            <dt>Contact:</dt>
+                            <dd>85457XXXXX</dd>
+                        </dl>
+                    </address>
+                </div>
+            </section>
+
+            <section class="product-management">
+                <div class="section-header">
+                    <h2>My Products</h2>
+                    <button>Add New Product</button>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="order-management">
+                <div class="section-header">
+                    <h2>Recent Orders.</h2>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Marketplace</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
