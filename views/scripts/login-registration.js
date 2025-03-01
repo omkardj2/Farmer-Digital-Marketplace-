@@ -43,11 +43,9 @@ document.getElementById('signup-actual').addEventListener('submit', function(eve
         return;
     }
 
-.
     console.log({ firstName, lastName, signupEmail, signupPassword, role, terms });
 
 });
-
 
 // Login Form Submission
 document.getElementById('login-actual').addEventListener('submit', function(event) {
@@ -69,7 +67,6 @@ document.getElementById('login-actual').addEventListener('submit', function(even
         return;
     }
 
-    
     console.log({ loginEmail, loginPassword, loginRole });
 
 });

@@ -2,8 +2,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Sample product data (replace with API data)
     const products = [
-        { image: 'placeholder-product.jpg', name: 'Product A', price: '$25.00', quantity: 100 },
-        { image: 'placeholder-product.jpg', name: 'Product B', price: '$15.00', quantity: 50 },
+        { image: './images/placeholder-product.jpg', name: 'Product A', price: '$25.00', quantity: 100 },
+        { image: './images/placeholder-product.jpg', name: 'Product B', price: '$15.00', quantity: 50 },
         // ... more products
     ];
 
