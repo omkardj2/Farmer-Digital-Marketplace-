@@ -1,8 +1,12 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const mongoose_connection = require('../config/mongoose-connection')
 const customerModel = require("../models/customerModel");
 const farmerModel = require("../models/farmerModel");
+
+const cookieParser = require('cookie-parser');
+const generateToken = require('../utils/generateToken')
 
 function register(req , res){
     let{firstName , lastName , email , password , contact , role} = req.body;
@@ -32,8 +36,8 @@ function register(req , res){
             bcrypt.genSalt(10 , function( err , salt ){
                 bcrypt.hash(password , salt , async function(err , hash){
                     let customer = await customerModel.create({
-                        firstname,
-                        lastname,
+                        firstName,
+                        lastName,
                         email,
                         password: hash,
                         contact
@@ -53,26 +57,37 @@ async function login(req , res){
         return res.status(400).json({message: "All fields are required"});
     }
     
-    if(role == "farmer"){
-        try{
+    try{
+        if(role == "farmer"){
+            
             let farmer = await farmerModel.findOne({email});
+            if(!farmer) {return res.send("farmer not found")}
 
             bcrypt.compare(password , farmer.password , function(err , result){
-                res.send(result);
+                if(result){
+                    const token = jwt.sign({email:farmer.email , id:farmer._id} , "secret");
+                    res.cookie("token" , token)
+                    res.send(token);
+                }else return res.send("invalid password or email");
             })
-        }catch(err){
-            res.send(err).status(500);
-        }
-    }else if(role == "customer"){
-        try{
-            let customer = customerModel.findOne({email});
+            
+        }else if(role == "customer"){
+            
+            let customer = await customerModel.findOne({email});
+            if(!customer) return res.send("customer not found");
 
-            bcrypt.compare(password , farmer.password , function(err , result){
-                res.send(result);
+            bcrypt.compare(password , customer.password , function(err , result){
+                if(result){
+                    const token = generateToken(customer);
+                    res.cookie("token" , token)
+                    res.send(token);
+                }
+                else return res.send("invalid email or password");
             })
-        }catch(err){
-            return res.status(500).json({message: "Server Error" , error:err});
+            
         }
+    }catch(err){
+        return res.status(500).json({message:"server error" , error:err})
     }
 }
 
