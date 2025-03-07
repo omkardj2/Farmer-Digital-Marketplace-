@@ -65,7 +65,7 @@ async function login(req , res){
 
             bcrypt.compare(password , farmer.password , function(err , result){
                 if(result){
-                    const token = jwt.sign({email:farmer.email , id:farmer._id} , "secret");
+                    const token = generateToken(farmer);
                     res.cookie("token" , token)
                     res.send(token);
                 }else return res.send("invalid password or email");
