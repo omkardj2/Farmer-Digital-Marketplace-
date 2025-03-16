@@ -14,7 +14,7 @@ goToLogin.addEventListener('click', () => {
 });
 
 // Signup Form Submission
-document.getElementById('signup-actual').addEventListener('submit', function(event) {
+document.getElementById('signup-actual').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 
     // 1. Get form values
@@ -43,12 +43,31 @@ document.getElementById('signup-actual').addEventListener('submit', function(eve
         return;
     }
 
-    console.log({ firstName, lastName, signupEmail, signupPassword, role, terms });
+    // 3. Send data to backend
+    try {
+        const response = await fetch('http://localhost:3000/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ firstName, lastName, email: signupEmail, password: signupPassword, contact: '', role })
+        });
 
+        const data = await response.json();
+        if (response.ok) {
+            alert('Registration successful!');
+            // Optionally, redirect to login page or dashboard
+        } else {
+            alert(`Registration failed: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred during registration.');
+    }
 });
 
 // Login Form Submission
-document.getElementById('login-actual').addEventListener('submit', function(event) {
+document.getElementById('login-actual').addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const loginEmail = document.getElementById('loginEmail').value;
@@ -67,6 +86,25 @@ document.getElementById('login-actual').addEventListener('submit', function(even
         return;
     }
 
-    console.log({ loginEmail, loginPassword, loginRole });
+    // 3. Send data to backend
+    try {
+        const response = await fetch('http://localhost:3000/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: loginEmail, password: loginPassword, role: loginRole })
+        });
 
+        const data = await response.json();
+        if (response.ok) {
+            alert('Login successful!');
+            // Optionally, redirect to dashboard
+        } else {
+            alert(`Login failed: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert(error);
+    }
 });
