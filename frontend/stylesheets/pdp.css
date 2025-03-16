@@ -1,0 +1,244 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    color: #2c7b4f;
+    padding: 15px;
+}
+.searchbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
+
+.searchicon{
+    background-color: #35a166;
+    padding: 6px;
+    display: inline;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
+}
+input{
+    border-color: white;
+    flex-grow: 1.7;
+    font-size: 1rem;
+    border: none;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: bold;
+    color: #356e4f;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 35px;
+    margin-right: 12px;
+}
+
+input[type="text"] { 
+    padding: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid #ddd;
+} 
+
+#home, #cart{
+    color: #2c7b4f;
+    font-size: 18px;
+    font-weight: 550;
+    text-decoration: none;
+    margin-right: 15px;
+
+}
+
+.account{
+    text-decoration: none;
+    color: white;
+}
+
+#acc-logo{
+    background-color: #1b5736;
+    display: inline;
+    width: 20px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 9px;
+    padding-right: 9px;
+    border-radius: 50%; 
+}
+
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Product Section */
+.product-detail {
+    flex: 1;
+    min-width: 300px;
+    margin-bottom: 20px;
+}
+
+.product-info {
+    background: rgba(30, 122, 70, 0.15);
+    border: #7fc19d 2px solid;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+}
+
+.product-info img {
+    width: 75%;
+    border-radius: 10px;
+}
+.product-info img:hover {
+    transform: scale(1.08);
+  }
+#increase,#decrease{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.add-to-cart:hover,.share:hover,.review:hover,.next:hover,.next:hover{
+    background-color: #34925e;
+}
+.share, .review, .next{
+    padding: 10px;
+    width: 100px;
+    margin: 0 5px;
+    font-size: medium;
+    border: none;
+    background:  #46a571;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Cart Section */
+.cart-summary {
+    background: rgba(30, 122, 70, 0.15);
+    border: #7fc19d 2px solid;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 30%;
+}
+
+/* Quantity Controls */
+.cart-controls {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.cart-controls button {
+    padding: 10px;
+    margin: 0 5px;
+    border: none;
+    background: #46a571;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.item-image {
+    width:100px;
+    height: 100px;
+    
+}
+.item-image img{
+    width:100px;
+    height: 100px;
+    margin-left:10px;
+}
+.items{
+    width: 90%;
+    height: 120px;
+    margin: 10px;
+    border: rgb(186, 181, 181) 2px solid;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+}
+.items-info{
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+    align-items: center;
+}
+#item-info-1,#item-info-2{
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    
+}
+#item-info-1{
+    gap: 30px;
+}
+#item-info-2{
+    gap: 60px;
+}
+
+#footer{
+    margin: 0px;
+    padding-right: 50px;
+}
+footer{
+    display:flex;
+    height:10px;
+}
+
+/* @media(max-width: 425px){
+    .item-image img{
+        width:60px;
+        height: 60px;
+        margin-left:5px;
+    }
+    .items{
+        width: 90%;
+    }
+} */
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    #home, #cart{
+        font-size: 16px;
+        font-weight: 550;
+        margin-right: 5px;
+    
+    }
+    .searchbar{
+        width: 18%;
+    }
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cart-summary {
+        width: 90%;
+        margin-top: 20px;
+    }
+}
+
+
