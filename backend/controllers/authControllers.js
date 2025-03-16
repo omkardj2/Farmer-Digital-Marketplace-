@@ -10,7 +10,7 @@ const generateToken = require('../utils/generateToken')
 
 function register(req , res){
     let{firstName , lastName , email , password , contact , role} = req.body;
-    if(!firstName || !lastName || !email || !password || !contact || !role){
+    if(!firstName || !lastName || !email || !password || !role){
         return res.status(400).json({message: "All fields are required"});
     }
     
@@ -61,28 +61,28 @@ async function login(req , res){
         if(role == "farmer"){
             
             let farmer = await farmerModel.findOne({email});
-            if(!farmer) {return res.send("farmer not found")}
+            if(!farmer) {return res.status(400).json({message:"farmer not found"})}
 
             bcrypt.compare(password , farmer.password , function(err , result){
                 if(result){
                     const token = generateToken(farmer);
                     res.cookie("token" , token)
-                    res.send(token);
-                }else return res.send("invalid password or email");
+                    res.status(201).json({message:"login successful"})
+                }else return res.status(400).json({message:"invalid password or email"});
             })
             
         }else if(role == "customer"){
             
             let customer = await customerModel.findOne({email});
-            if(!customer) return res.send("customer not found");
+            if(!customer) return res.status(400).json({message:"customer not found"});
 
             bcrypt.compare(password , customer.password , function(err , result){
                 if(result){
                     const token = generateToken(customer);
                     res.cookie("token" , token)
-                    res.send(token);
+                    res.status(201).json({message:"login successful"})
                 }
-                else return res.send("invalid email or password");
+                else return res.status(400).json({message:"invalid email or password"});
             })
             
         }

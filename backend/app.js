@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const cookieParser = require('cookie-parser')
 
@@ -10,7 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/" , auth)
+app.use(cors());
+app.use("/auth" , auth)
 app.use("/users" , usersRouter);
 app.use("/farmer" , farmerRouter);
 
