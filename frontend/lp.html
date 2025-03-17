@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+    <link rel="stylesheet" href="stylesheets/lp.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Login</h2>
+            <form action="#">
+                <input type="tel" placeholder="Phone number" required>
+                <input type="password" placeholder="Password" required minlength="8">
+                <select required>
+                    <option value="" disabled selected>User Type</option>
+                    <option value="farmer">Farmer</option>
+                    <option value="buyer">Buyer</option>
+                    <option value="middlemen">Middlemen</option>
+                </select>
+                <label class="checkbox-container">
+                    <input type="checkbox" required>
+                    <p>By signing up, I agree with the <a href="#">Terms of Use</a> & <a href="#">Privacy</a></p>
+                </label>
+                <button id="login" type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="http://127.0.0.1:5501/create%20account%20page/cap.html">Register</a></p>
+            <div class="or-divider">
+                <hr><span>OR</span><hr>
+            </div>
+            <button class="googleLogin">
+                <i class="fa-brands fa-google" style="color: #ffffff;"></i>
+                <p>Continue with Google</p>
+            </button>
+            </div>
+            
+    </div>
+    <script src="lp.js"></script>
+</body>
+</html>
