@@ -51,44 +51,54 @@ function register(req , res){
     }
 }
 
-async function login(req , res){
-    let{email , password , role} = req.body;
-    if( !email || !password || !role){
-        return res.status(400).json({message: "All fields are required"});
+async function login(req, res) {
+    let { email, password, role } = req.body;
+    if (!email || !password || !role) {
+        return res.status(400).json({ message: "All fields are required" });
     }
-    
-    try{
-        if(role == "farmer"){
-            
-            let farmer = await farmerModel.findOne({email});
-            if(!farmer) {return res.status(400).json({message:"farmer not found"})}
 
-            bcrypt.compare(password , farmer.password , function(err , result){
-                if(result){
+    try {
+        if (role == "farmer") {
+            let farmer = await farmerModel.findOne({ email });
+            if (!farmer) {
+                return res.status(400).json({ message: "Farmer not found" });
+            }
+
+            bcrypt.compare(password, farmer.password, function (err, result) {
+                if (result) {
                     const token = generateToken(farmer);
-                    res.cookie("token" , token)
-                    res.status(201).json({message:"login successful"})
-                }else return res.status(400).json({message:"invalid password or email"});
-            })
-            
-        }else if(role == "customer"){
-            
-            let customer = await customerModel.findOne({email});
-            if(!customer) return res.status(400).json({message:"customer not found"});
-
-            bcrypt.compare(password , customer.password , function(err , result){
-                if(result){
-                    const token = generateToken(customer);
-                    res.cookie("token" , token)
-                    res.status(201).json({message:"login successful"})
+                    res.cookie("authToken", token, { httpOnly: true, sameSite: 'Lax' });
+                    res.status(200).json({ message: "Login successful", token, role: "farmer" });
+                } else {
+                    return res.status(400).json({ message: "Invalid password or email" });
                 }
-                else return res.status(400).json({message:"invalid email or password"});
-            })
-            
+            });
+
+        } else if (role == "customer") {
+            let customer = await customerModel.findOne({ email });
+            if (!customer) {
+                return res.status(400).json({ message: "Customer not found" });
+            }
+
+            bcrypt.compare(password, customer.password, function (err, result) {
+                if (result) {
+                    const token = generateToken(customer);
+                    res.cookie('authToken', token, {
+                        httpOnly: true,
+                        //secure: true, // Set to true in production (HTTPS)
+                        expires: new Date(Date.now() + 900000), // 15 minutes
+                        path: '/'
+                      });
+                    res.status(200).json({ message: "Login successful", token, role: "customer" });
+                } else {
+                    return res.status(400).json({ message: "Invalid email or password" });
+                }
+            });
+
         }
-    }catch(err){
-        return res.status(500).json({message:"server error" , error:err})
+    } catch (err) {
+        return res.status(500).json({ message: "Server error", error: err });
     }
 }
 
-module.exports = {register , login};
+module.exports = { register, login };
