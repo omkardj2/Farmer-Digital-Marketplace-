@@ -8,41 +8,148 @@ body {
 }
 
 header {
-    background-color: #fff;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    color: #2c7b4f;
     padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
-
-.header-content {
+.searchbar{
     display: flex;
-    justify-content: space-between; /* Distribute space between logo, nav, and user actions */
-    align-items: center; /* Vertically align content */
-    max-width: 1200px; /* Set a maximum width for the header */
-    margin: 0 auto; /* Center the header content */
+    align-items: center;
+    justify-content: center;
+    width: 40%;
 }
 
-.logo {
+.searchicon{
+    background-color: #35a166;
+    padding: 6px;
+    display: inline;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
+}
+input{
+    border-color: white;
+    flex-grow: 1.7;
+    font-size: 1rem;
+    border: none;
+}
+
+.logo-text {
+    font-size: 18px;
     font-weight: bold;
-    font-size: 1.2rem;
+    color: #356e4f;
 }
 
-nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #007bff;
-}
-
-.user-actions {
+.logo-container {
     display: flex;
-    gap: 10px;
+    align-items: center;
+}
+
+.logo-img {
+    height: 35px;
+    margin-right: 6px;
+}
+
+input[type="text"] { 
+    padding: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid #ddd;
+} 
+
+#settings, #cart{
+    color: #2c7b4f;
+    font-size: 18px;
+    font-weight: 520;
+    text-decoration: none;
+    margin-right:10px;
+}
+
+.account{
+    text-decoration: none;
+    color: white;
+}
+
+#acc-logo{
+    background-color: #1b5736;
+    display: inline;
+    width: 20px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 9px;
+    padding-right: 9px;
+    border-radius: 50%; 
+}
+
+@media(max-width:425px){
+    .logo-text{
+        display: none;
+    }
+}
+@media(max-width:585px){
+    #acc-logo{
+        font-size: 12px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+    #home, #cart{
+        font-size: 8px;
+        font-weight: 500;
+        margin-right: 5px;
+    }
+    .logo-text{
+        font-size: 10px;
+        padding: 2px;
+    }
+    input[type="text"]{
+        width: 48px;
+        font-size: 15px;
+    }
+    .logo-img{
+        margin-right:2px;
+    }
+    #item-info-1,#item-info-2{
+        height: 40px;
+    }
+    #item-info-1{
+        gap: 20px;
+    }
+    #item-info-2{
+        gap: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    #home, #cart{
+        font-size: 16px;
+        font-weight: 550;
+        margin-right: 5px;
+    }
+    .searchbar{
+        width: 18%;
+    }
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cart-summary {
+        width: 90%;
+        margin-top: 20px;
+    }
 }
 
 main {
     flex: 1;
     padding: 20px;
     max-width: 1200px;
-    margin: 20px auto; /* Center the main content */
-}
+    margin: 20px auto; 
+} 
 
 .filters {
     display: flex;
@@ -57,7 +164,7 @@ main {
 }
 
 .clear-filters {
-    background-color: #eee;
+    background-color: #c6e4c6;
     color: #333;
     padding: 10px 15px;
     border: none;
@@ -95,7 +202,7 @@ main {
 }
 
 .product-card button {
-    background-color: #007bff;
+    background-color: rgb(52, 141, 78,0.8);
     color: white;
     padding: 10px 15px;
     border: none;
@@ -112,14 +219,30 @@ main {
     border-radius: 8px;
 }
 
+.sale button:hover{
+    background-color: #34925e;
+}
+.sale button{
+    padding: 10px;
+    width: 100px;
+    margin: 0 5px;
+    font-size: medium;
+    border: none;
+    background:  #46a571;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
 .sale h2 {
     margin-bottom: 10px;
 }
 
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin-top: auto; /* Push footer to the bottom */
+#footer{
+    margin: 0px;
+    padding-right: 50px;
+}
+footer{
+    display:flex;
+    height:10px;
 }

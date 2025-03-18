@@ -7,22 +7,29 @@
     <link rel="stylesheet" href="./stylesheets/product-list.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
+
 <body>
     <header>
-        <div class="header-content">
-            <div class="logo">Farmer Digital Marketplace</div>
-            <nav>
-                <a href="#">Dashboard</a>
-                <a href="#">Product Listings</a>
-                <a href="#">Cart</a>
-            </nav>
-            <div class="user-actions">
-                <button>Settings</button>
-                <button>Profile</button>
+        <div class="logo-container">
+            <img src="./images/logo.png" alt="GreenBasket Logo" class="logo-img">
+            <span class="logo-text">GreenBasket</span>
+        </div>
+        <div class="searchbar">
+            <input type="text" placeholder="Search...">
+            <div class="searchicon">
+                <i class="fa-brands fa-sistrix" style="color: black;"></i>
             </div>
         </div>
+        <nav>
+            <a href="#" id="cart"><i class="fa-solid fa-cart-shopping" style="color: #35ab6a;"></i> Cart</a>
+            <a href="#" id="settings"><i class="fa-solid fa-gear" style="color: #949dad;"></i>Setting</a>
+            <a href="#" class="account">
+                <div id="acc-logo">A</div>
+            </a>
+        </nav>
     </header>
 
     <main>
@@ -44,9 +51,15 @@
             <button>Shop now!</button>
         </section>
     </main>
-
     <footer>
-        <p>&copy; 2024 Your Marketplace</p>
+        <p id="footer">&copy; 2025 GreenBasket | Privacy | Terms | Sitemap</p>
+        <div class="social-icons">
+            <a href="#"><i class="fa-brands fa-facebook" style="color: #3fa5f3;"></i></a>
+            <a><i class="fa-brands fa-instagram" style="color: #e66599;"></i></a>
+            <a><i class="fa-brands fa-whatsapp" style="color: #04be07;"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter" style="color: #39a3f3;"></i></a>
+            
+        </div>
     </footer>
 
     <script src="./scripts/product-list.js"></script>

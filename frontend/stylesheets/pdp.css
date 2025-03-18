@@ -12,6 +12,7 @@ header {
     background-color: white;
     color: #2c7b4f;
     padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 .searchbar{
     display: flex;
@@ -63,7 +64,6 @@ input[type="text"] {
     font-weight: 550;
     text-decoration: none;
     margin-right: 15px;
-
 }
 
 .account{
@@ -208,24 +208,51 @@ footer{
     height:10px;
 }
 
-/* @media(max-width: 425px){
-    .item-image img{
-        width:60px;
-        height: 60px;
-        margin-left:5px;
+@media(max-width:425px){
+    .logo-text{
+        display: none;
     }
-    .items{
-        width: 90%;
+}
+@media(max-width:585px){
+    #acc-logo{
+        font-size: 12px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 7px;
+        padding-right: 7px;
     }
-} */
+    #home, #cart{
+        font-size: 8px;
+        font-weight: 500;
+        margin-right: 5px;
+    }
+    .logo-text{
+        font-size: 10px;
+        padding: 2px;
+    }
+    input[type="text"]{
+        width: 48px;
+        font-size: 15px;
+    }
+    .logo-img{
+        margin-right:2px;
+    }
+    #item-info-1,#item-info-2{
+        height: 40px;
+    }
+    #item-info-1{
+        gap: 20px;
+    }
+    #item-info-2{
+        gap: 50px;
+    }
+}
 
-/* Responsive Layout */
 @media (max-width: 768px) {
     #home, #cart{
         font-size: 16px;
         font-weight: 550;
         margin-right: 5px;
-    
     }
     .searchbar{
         width: 18%;
@@ -234,7 +261,6 @@ footer{
         flex-direction: column;
         align-items: center;
     }
-    
     .cart-summary {
         width: 90%;
         margin-top: 20px;
