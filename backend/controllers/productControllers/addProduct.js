@@ -1,12 +1,12 @@
-const farmerModel = require('../models/farmerModel')
-const productModel = require('../models/productModel');
+const farmerModel = require('../../models/farmerModel')
+const productModel = require('../../models/productModel');
 const jwt = require('jsonwebtoken')
 
 module.exports = async function addProduct(req,res){
     let{name,image,description,price,quantity} = req.body;
 
     try{
-        let token = req.cookies.token;
+        let token = req.cookies.authToken;
 
         if(!token){
             return res.status(401).json({message:"Unauthorized"});
