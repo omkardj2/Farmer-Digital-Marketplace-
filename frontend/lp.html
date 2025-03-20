@@ -11,32 +11,27 @@
     <div class="container">
         <div class="form-container">
             <h2>Login</h2>
-            <form action="#">
-                <input type="tel" placeholder="Phone number" required>
-                <input type="password" placeholder="Password" required minlength="8">
-                <select required>
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required minlength="8">
+                <select id="role" required>
                     <option value="" disabled selected>User Type</option>
                     <option value="farmer">Farmer</option>
-                    <option value="buyer">Buyer</option>
-                    <option value="middlemen">Middlemen</option>
+                    <option value="customer">Customer</option>
+                    <option value="vendor">Vendor</option>
                 </select>
-                <label class="checkbox-container">
-                    <input type="checkbox" required>
-                    <p>By signing up, I agree with the <a href="#">Terms of Use</a> & <a href="#">Privacy</a></p>
-                </label>
                 <button id="login" type="submit">Login</button>
             </form>
-            <p>Don't have an account? <a href="http://127.0.0.1:5500/Farmer-Digital-Marketplace-/frontend/cap.html">Register</a></p>
+            <p>Don't have an account? <a href="cap.html">Register</a></p>
             <div class="or-divider">
                 <hr><span>OR</span><hr>
             </div>
             <button class="googleLogin">
-                <i class="fa-brands fa-google" style="color: #ffffff;"></i>
-                <p>Continue with Google</p>
+                <i class="fa-brands fa-google" style="color: #ffffff; margin-right: 10px;"></i>
+                Continue with Google
             </button>
-            </div>
-            
+        </div>
     </div>
-    <script src=""></script>
+    <script src="./scripts/lp.js"></script>
 </body>
 </html>

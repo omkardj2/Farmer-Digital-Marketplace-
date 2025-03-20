@@ -6,17 +6,15 @@
 
 body, html {
     height: 100%;
+    background-image: url('../images/lp1.jpg');
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80%;
     min-height: 100vh;
-    background-image: url('../images/lp1.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -24,16 +22,18 @@ body, html {
 .form-container {
     background-color: rgba(255, 255, 255);
     padding: 2rem;
-    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     width: 100%;
     text-align: center;
+    margin: 0 auto;
 }
 
 h2 {
+    text-align: center;
     margin-bottom: 1.5rem;
-    color: #484545;
+    font-size: 1.8rem;
+    color: rgb(46, 44, 44);
 }
 
 form {
@@ -41,26 +41,33 @@ form {
     flex-direction: column;
 }
 
-input[type="tel"],
+.input-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="email"],
 input[type="password"],
 select {
-    background-color: #eaeaea;
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     margin-bottom: 1rem;
-    border: 1px solid #d2cfcf;
-    border-radius: 10px;
-    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 1rem;
     outline: none;
 }
 
-input[type="tel"]:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
 input[type="password"]:focus,
 select:focus {
     border-color: #4caf50;
 }
 
-#login {
+button {
     background-color: #4caf50;
     color: white;
     padding: 0.7rem;
@@ -68,48 +75,21 @@ select:focus {
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
-    margin: 0.5rem;
-}
-#login:hover {
-    background-color: #45a049;
-}
-
-.googleLogin{
-    background-color: #db4437;
-    color: white;
-    padding: 0.7rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin: 0.5rem;
-    width: 100%;
     margin-top: 1rem;
 }
 
-.googleLogin:hover {
-    background-color: #c33c2f;
+button:hover {
+    background-color: #45a049;
 }
 
 .checkbox-container {
     display: flex;
     align-items: center;
-    justify-content: center;
     margin-bottom: 1rem;
-    font-size: small;
 }
 
 .checkbox-container input {
-    margin-right: 0.1rem;
-}
-
-p a {
-    color: #4caf50;
-    text-decoration: none;
-}
-
-.checkbox-container a:hover {
-    text-decoration: underline;
+    margin-right: 0.5rem;
 }
 
 .or-divider {
@@ -121,7 +101,6 @@ p a {
     color: #6b6767;
 }
 
-    
 .or-divider hr {
     flex: 1;
     border: none;
@@ -129,7 +108,50 @@ p a {
     background-color: rgb(189, 184, 184);
 }
 
+.googleLogin {
+    background-color: #db4437;
+    color: white;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0.5rem auto;
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.googleLogin:hover {
+    background-color: #c33c2f;
+}
+
+/* Style for the "Don't have an account? Register" link */
+p {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #6b6767;
+}
+
+p a {
+    color: #4caf50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 600px) {
+    .input-group {
+        flex-direction: column;
+    }
+
     .form-container {
         padding: 1rem;
     }
