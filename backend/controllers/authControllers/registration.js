@@ -8,13 +8,16 @@ const farmerModel = require("../../models/farmerModel");
 const cookieParser = require('cookie-parser');
 const generateToken = require('../../utils/generateToken')
 
-function register(req , res){
+async function register(req , res){
     let{firstName , lastName , email , password , contact , role} = req.body;
     if(!firstName || !lastName || !email || !password || !role){
         return res.status(400).json({message: "All fields are required"});
     }
     
     if(role == "farmer"){
+        let existing = await farmerModel.findOne({email});
+        if(existing) return res.json({message:"user already exists"});
+
         try{
             bcrypt.genSalt(10 , function( err , salt ){
                 bcrypt.hash(password , salt , async function(err , hash){
@@ -32,6 +35,9 @@ function register(req , res){
             res.send(err).status(500);
         }
     }else if(role == "customer"){
+
+        let existing = await customerModel.findOne({email});
+        if(existing) return res.json({message:"user already exists"});
         try{
             bcrypt.genSalt(10 , function( err , salt ){
                 bcrypt.hash(password , salt , async function(err , hash){
