@@ -3,33 +3,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.querySelector("#email");
     const password = document.querySelector("#password");
     const role = document.querySelector("#role");
-    const rememberMe = document.querySelector("#rememberMe");
+
+    // Function to check cookie status
+    function checkCookie() {
+        console.log("All cookies:", document.cookie);
+        const cookies = document.cookie.split(';');
+        const authToken = cookies.find(cookie => cookie.trim().startsWith('authToken='));
+        console.log("Auth token cookie:", authToken);
+        return authToken ? true : false;
+    }
 
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        // Validation
-        if (!email.value.trim()) {
-            alert("Please enter your email.");
-            return;
-        }
-
-        if (!password.value.trim()) {
-            alert("Please enter your password.");
-            return;
-        }
-
-        if (!role.value) {
-            alert("Please select a user type.");
+        // Form validation
+        if (!email.value.trim() || !password.value.trim() || !role.value) {
+            alert("Please fill in all fields");
             return;
         }
 
         try {
-            const response = await fetch('http://localhost:3000/auth/login', {
+            const response = await fetch('http://127.0.0.1:3000/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                withCredentials: true,
+                credentials: 'include', // Important for cookies
                 body: JSON.stringify({
                     email: email.value,
                     password: password.value,
@@ -37,31 +37,40 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
             });
 
+            const data = await response.json(); 
+
             if (response.ok) {
-                const data = await response.json();
-                alert("Login successful!");
+                console.log("Login successful!");
+                
+                // Check if cookie is set
+                if (checkCookie()) {
+                    console.log("Cookie set successfully");
+                } else {
+                    console.warn("Cookie not set after login");
+                }
+
                 // Redirect based on role
                 if (data.role === "farmer") {
-                    window.location.href = "user-dashboard.html"; // Farmer dashboard
+                    window.location.href = "farmer-dashboard.html";
                 } else if (data.role === "customer") {
-                    window.location.href = "product-list.html"; // Buyer product list
+                    window.location.href = "product-list.html";
                 } else {
-                    window.location.href = "user-home-page.html"; // Default page
+                    window.location.href = "user-home.html";
                 }
             } else {
-                const errorData = await response.json();
-                alert(`Login failed: ${errorData.message || 'Unknown error'}`);
+                alert(`Login failed: ${data.message}`);
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred while logging in.');
+            console.error('Error during login:', error);
+            alert('An error occurred while logging in. Please try again.');
         }
     });
 
     // Google Login Button Handler
     const googleLoginButton = document.querySelector(".googleLogin");
-    googleLoginButton.addEventListener("click", () => {
-        alert("Google Login is not implemented yet.");
-        // Implement Google Login logic here
-    });
+    if (googleLoginButton) {
+        googleLoginButton.addEventListener("click", () => {
+            alert("Google Login functionality coming soon!");
+        });
+    }
 });
