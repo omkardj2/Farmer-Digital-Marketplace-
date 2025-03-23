@@ -2,6 +2,7 @@ const farmerModel = require('../../models/farmerModel')
 const productModel = require('../../models/productModel');
 const jwt = require('jsonwebtoken')
 
+
 module.exports = async function addProduct(req,res){
     let{name,image,description,price,quantity} = req.body;
 
@@ -13,7 +14,7 @@ module.exports = async function addProduct(req,res){
         }
 
         let decoded = jwt.verify(token , process.env.JWT_KEY);
-        let farmer = await farmerModel.findById(decoded.id);
+        let farmer = await farmerModel.findOne({_id:decoded.id});
         
         let product = await productModel.create({
             name,
