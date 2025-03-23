@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopEasy - Checkout</title>
+  <link rel="stylesheet" href="./stylesheets/user-checkout-page.css">
+</head>
+<body>
+  <div class="checkout-container">
+    <h2>Checkout</h2>
+
+    <div class="form-section">
+      <div class="input-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="John Smith">
+      </div>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="johnsmith@gmail.com">
+      </div>
+
+      <h3>Address</h3>
+      <div class="input-group">
+        <label for="address">Street Address</label>
+        <input type="text" id="address" placeholder="2323 W 12th St">
+      </div>
+      <div class="input-group">
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Los Angeles">
+      </div>
+      <div class="input-group">
+        <label for="state">State</label>
+        <input type="text" id="state" placeholder="CA">
+      </div>
+      <div class="input-group">
+        <label for="zip">Zip Code</label>
+        <input type="text" id="zip" placeholder="90010">
+      </div>
+
+      <!-- Payment Method Options -->
+      <h2>Payment Details</h2>
+      <div class="radio-group">
+        <input type="radio" id="cash" name="payment" checked>
+        <label for="cash">Cash on Delivery</label>
+      </div>
+      <div class="radio-group">
+        <input type="radio" id="online-payment" name="payment">
+        <label for="online-payment">Online Payment (Razorpay)</label>
+      </div>
+
+      <!-- Razorpay Payment Fields (Initially Hidden) -->
+      <div class="razorpay-payment hidden">
+        <div class="input-group">
+          <label for="card-number">Credit Card Number</label>
+          <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+        </div>
+        <div class="input-group">
+          <label for="expiry">Expiration Date</label>
+          <input type="text" id="expiry" placeholder="MM/YY">
+        </div>
+        <div class="input-group">
+          <label for="cvv">CVV</label>
+          <input type="text" id="cvv" placeholder="123">
+        </div>
+      </div>
+
+
+      <h2>Delivery Options</h2>
+      <div class="radio-group">
+        <input type="radio" id="standard" name="delivery" checked>
+        <label for="standard">Standard Delivery FREE</label>
+      </div>
+      <div class="radio-group">
+        <input type="radio" id="express" name="delivery">
+        <label for="express">Express Delivery $6.99</label>
+      </div>
+
+      <h2>Review Order Summary</h2>
+      <ul class="order-summary">
+        <li>Product 1 - $10.00</li>
+        <li>Product 2 - $20.00</li>
+        <li>Product 3 - $15.00</li>
+        <li>Product 4 - $5.00</li>
+      </ul>
+      <p id="total-price">Toatal : Rs 1000</p><br>
+
+      <button class="btn-complete">Complete Purchase</button>
+
+      <div class="support-links">
+        <a href="#">Help</a>
+        <a href="#">Customer Support</a>
+      </div>
+    </div>
+  </div>
+  <script src="./scripts/user-checkout-page.js"></script>
+</body>
+</html>

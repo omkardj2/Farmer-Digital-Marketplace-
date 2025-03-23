@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>User cart page</title>
+    <link rel="stylesheet" href="./stylesheets/user-cart-page.css">
+</head>
+<body>
+        <header>
+            <div class="logo-container">
+                <img src="./images/logo.png" alt="GreenBasket Logo" class="logo-img">
+                <span class="logo-text">GreenBasket</span>
+            </div>
+            <div class="searchbar">
+                <input type="text" placeholder="Search...">
+                <div class="searchicon">
+                    <i class="fa-brands fa-sistrix" style="color: black;"></i>
+                </div>
+            </div>
+            <nav>
+                <a href="#" id="home"><i class="fa-solid fa-house" style="color:  #35ab6a;"></i> Home</a>
+                <a href="#" id="settings"><i class="fa-solid fa-gear" style="color: #949dad;"></i>Settings</a>
+                <a href="#" class="account">
+                    <div id="acc-logo">A</div>
+                </a>
+            </nav>
+        </header>
+
+        <section class="product-listing">
+            <div class="info">
+                <img src="./images/man-with-cart.png" alt="Shopping Cart" class="cart-image">
+                <p id="userName">Hello name!!</p>
+                <p> Your things to purchase</p>
+            </div>
+        </section>
+
+    <div class="container">
+        <section class="products-box">
+        <div class="products">
+            <div class="product">
+                <img src="./images/apple product photo.jpg" alt="Apple">
+                <div class="product-info">
+                    <h3 id="product-name">Apple</h3>
+                    <p id="price">Rs 120</p>
+                    <button id="quick-view">Quick view</button><br>
+                    <button class="remove">Remove</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="./images/apple product photo.jpg" alt="Apple">
+                <div class="product-info">
+                    <h3 id="product-name">Apple</h3>
+                    <p id="price">Rs 120</p>
+                    <button id="quick-view">Quick view</button><br>
+                    <button class="remove">Remove</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="./images/apple product photo.jpg" alt="Apple">
+                <div class="product-info">
+                    <h3 id="product-name">Apple</h3>
+                    <p id="price">Rs 120</p>
+                    <button id="quick-view">Quick view</button><br>
+                    <button class="remove">Remove</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="./images/potato.jpg" alt="Potato">
+                <div class="product-info">
+                    <h3 id="product-name">Potato</h3>
+                    <p id="price">Rs 60</p>
+                    <button id="quick-view">Quick view</button><br>
+                    <button class="remove">Remove</button>
+                </div>
+            </div> 
+        </div>
+        </section> 
+        <div id="pay">
+            <h3>Total : Rs 1000</h3>
+            <button class="pay-btn" id="pay-btn">Proceed to Pay</button>
+        </div>   
+            <!-- More products can go here -->
+            <section class="related-section">
+                <div class="line-title-line">
+                    <hr class="line">
+                    <span class="title">Related Items</span>
+                    <hr class="line">
+                </div>
+                <div id="related-items">
+                        <div class="cart-product-list">
+                            <div class="items">
+                                <div class="item-image">
+                                    <img src="./images/apple product photo.jpg">
+                                </div>
+                                <div class="item-info">
+                                    <div id="item-info-1">
+                                        <p>Product title<p>
+                                        <p id="price">Rs 120</p>
+                                    </div>
+                                    <div id="item-info-2">
+                                        <button id="quick-view2">Quick view</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item-image">
+                                    <img src="./images/apple product photo.jpg">
+                                </div>
+                                <div class="item-info">
+                                    <div id="item-info-1">
+                                        <p>Product title<p>
+                                        <p id="price">Rs 120</p>
+                                    </div>
+                                    <div id="item-info-2">
+                                        <button id="quick-view2">Quick view</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="items">
+                                <div class="item-image">
+                                    <img src="./images/apple product photo.jpg">
+                                </div>
+                                <div class="item-info">
+                                    <div id="item-info-q    1">
+                                        <p>Product title<p>
+                                        <p id="price">Rs 120</p>
+                                    </div>
+                                    <div id="item-info-2">
+                                        <button id="quick-view2">Quick view</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+              </section>
+    </div>    
+
+        <footer>
+            <p id="footer">&copy; 2025 GreenBasket | Privacy | Terms | Sitemap</p>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-facebook" style="color: #3fa5f3;"></i></a>
+                <a><i class="fa-brands fa-instagram" style="color: #e66599;"></i></a>
+                <a><i class="fa-brands fa-whatsapp" style="color: #04be07;"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter" style="color: #39a3f3;"></i></a>
+                
+            </div>
+        </footer>
+    </div>
+    <script src="./scripts/user-cart-page.js"></script>
+</body>
+</html>
+
