@@ -13,7 +13,17 @@ const farmerSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'product'
         }
-    ]
+    ],
+    location: {
+        lat: {
+            type: Number,
+            required: false // Make it required if location is always needed
+        },
+        lng: {
+            type: Number,
+            required: false
+        }
+    }
 });
 
 module.exports = mongoose.model('farmer', farmerSchema);
