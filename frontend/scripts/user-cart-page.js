@@ -1,22 +1,82 @@
-const payButton = document.getElementById('.pay-btn');
-const removeButton = document.querySelectorAll('.remove');
-
-//quick view --> product detail page opens
-document.getElementById('quick-view').addEventListener('click', function() {
-    window.location.href='http://127.0.0.1:5500/Farmer-Digital-Marketplace-/frontend/pdp.html'; 
+document.addEventListener('DOMContentLoaded', () => {
+    fetchCartItems();
+    setupEventListeners();
 });
 
-document.getElementById('pay-btn').addEventListener('click', function() {
-    window.location.href='http://127.0.0.1:5500/Farmer-Digital-Marketplace-/frontend/user-checkout-page.html'; 
-});
-  
-
-removeButton.forEach(button => {
-    button.addEventListener('click', () => {
-        alert('Removed from cart');
+function setupEventListeners() {
+    document.getElementById('home').addEventListener('click', () => {
+        window.location.href = 'product-list.html';
     });
-});
 
-payButton.addEventListener('click', () => {
-    alert('Proceeding to payment');
-});
+    document.getElementById('pay-btn').addEventListener('click', () => {
+        window.location.href = 'user-checkout-page.html';
+    });
+}
+
+function fetchCartItems() {
+    fetch('http://127.0.0.1:3000/users/cart', {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(items => {
+        displayCartItems(items);
+        updateTotal(items);
+    })
+    .catch(err => {
+        console.error('Error fetching cart items:', err);
+        alert('Failed to load cart items');
+    });
+}
+
+function displayCartItems(items) {
+    const productsContainer = document.querySelector('.products');
+    productsContainer.innerHTML = '';
+
+    if (items.length === 0) {
+        productsContainer.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+        return;
+    }
+
+    items.forEach(item => {
+        const productHTML = `
+            <div class="product" data-id="${item._id}">
+                <img src="${item.image || './images/default-product.jpg'}" alt="${item.name}">
+                <div class="product-info">
+                    <h3>${item.name}</h3>
+                    <p class="price">₹${item.price}</p>
+                    <p class="quantity">Quantity: ${item.quantity}</p>
+                    <div class="product-actions">
+                        <button class="quick-view" onclick="quickView('${item._id}')">Quick view</button>
+                        <button class="remove" onclick="removeFromCart('${item._id}')">Remove</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        productsContainer.innerHTML += productHTML;
+    });
+}
+
+function updateTotal(items) {
+    const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    document.querySelector('#pay h3').textContent = `Total: ₹${total.toFixed(2)}`;
+}
+
+function removeFromCart(productId) {
+    fetch(`http://127.0.0.1:3000/users/cart/remove/${productId}`, {
+        method: 'DELETE',
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(() => {
+        fetchCartItems(); // Refresh cart
+    })
+    .catch(err => {
+        console.error('Error removing item:', err);
+        alert('Failed to remove item from cart');
+    });
+}
+
+function quickView(productId) {
+    window.location.href = `pdp.html?id=${productId}`;
+}

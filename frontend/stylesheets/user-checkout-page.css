@@ -2,109 +2,214 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  body {
-    background-image: url(../images/lp1.jpg);
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-  }
-  
-  .checkout-container {
-    max-width: 400px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
+}
 
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 8px;
-    color: #ffffff;
-    background-color: rgba(46, 156, 72, 0.8);
-  }
-  
-  h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .input-group {
-    margin-bottom: 15px;
-  }
-  
-  .input-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .checkbox-group, .radio-group {
-    margin-bottom: 15px;
-  }
-  
-  .checkbox-group label, .radio-group label {
-    margin-left: 5px;
-  }
-  
-  .order-summary {
-    list-style: none;
-    margin-bottom: 20px;
-  }
-  
-  .order-summary li {
-    padding: 5px 0;
-  }
-  
-  .btn-complete {
-    width: 100%;
-    padding: 15px;
-    background-color: #ffffff;
-    color: #28a745;
-    border: #28a745 1.8px solid;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .btn-complete:hover {
-    background-color: #28a745;
-    color: #ffffff;
-  }
-  
-  .support-links {
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    background: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .support-links a {
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-img {
+    height: 40px;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+nav a {
     text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Main Content */
+.checkout-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+section {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #4CAF50;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
     color: #666;
-  }
-  
-  .support-links a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Responsive */
-  @media (min-width: 768px) {
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Order Summary Styles */
+.cart-items {
+    margin-bottom: 1.5rem;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.total {
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-top: 2px solid #eee;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+/* Payment Method Styles */
+.payment-options {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+    border-color: #4CAF50;
+}
+
+.payment-option input[type="radio"] {
+    width: auto;
+}
+
+.payment-option label {
+    margin: 0;
+    flex: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.payment-form {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Button Styles */
+.checkout-actions {
+    margin-top: 2rem;
+    text-align: right;
+}
+
+.primary-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.primary-button:hover {
+    background: #45a049;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
     .checkout-container {
-      max-width: 600px;
+        padding: 1rem;
     }
-  }
-  
+
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

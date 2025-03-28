@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farmer Dashboard</title>
     <link rel="stylesheet" href="./stylesheets/farmer-dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
 <header>
     <div class="logo-container">
-        <img src="./images/logo.png" alt="GreenBasket Logo" class="logo-img">
-        <span class="logo-text">GreenBasket</span>
+        <img src="./images/logo.png" alt="Logo" class="logo-img">
+        <h1 class="logo-text">GreenBasket</h1>
     </div>
     <nav>
-        <a href="lp.html" class="nav-link">Logout</a>
+        <a href="#" class="nav-link">Logout</a>
     </nav>
 </header>
 
@@ -52,7 +52,13 @@
             <h2>Add New Product</h2>
             <form id="add-product-form">
                 <input type="text" id="product-name" placeholder="Product Name" required>
-                <input type="url" id="product-image" placeholder="Image URL">
+                <div class="image-upload">
+                    <label for="product-image">Product Image</label>
+                    <input type="file" id="product-image" accept="image/*" required>
+                    <div class="preview-container">
+                        <img id="image-preview" src="#" alt="Preview" style="display: none; max-width: 200px;">
+                    </div>
+                </div>
                 <textarea id="product-description" placeholder="Product Description" required></textarea>
                 <input type="number" id="product-price" placeholder="Price" step="0.01" required>
                 <input type="number" id="product-quantity" placeholder="Quantity" required>
@@ -81,7 +87,7 @@
 <footer>
     <p>&copy; 2025 GreenBasket | Privacy | Terms | Sitemap</p>
 </footer>
-
+<script src="./scripts/auth-check.js"></script>
 <script src="./scripts/farmer-dashboard.js"></script>   
 </body>
 </html>

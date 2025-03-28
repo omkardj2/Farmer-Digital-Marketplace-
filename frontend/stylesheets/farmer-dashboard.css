@@ -40,6 +40,7 @@ header {
 .logo-text {
     font-size: 1.5rem;
     font-weight: bold;
+    color: #4CAF50;
 }
 
 nav {
@@ -63,7 +64,7 @@ nav {
 
 /* Main Content */
 main {
-    margin-top: 100px;
+    margin-top: 80px;
     padding: 2rem;
     max-width: 1400px;
     margin-left: auto;
@@ -72,10 +73,10 @@ main {
 
 /* Farmer Info Section */
 .farmer-info {
-    margin-bottom: 2rem;
     background: white;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 2rem;
+    margin-bottom: 2rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -85,7 +86,7 @@ main {
 
 .farmer-card h2 {
     color: #4CAF50;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .farmer-card p {
@@ -100,6 +101,13 @@ main {
 }
 
 /* Product Section */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
 .product-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -141,17 +149,20 @@ main {
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.5);
-    z-index: 1100;
+    z-index: 1000;
+    overflow-y: auto;
 }
 
 .modal-content {
     background: white;
     width: 90%;
     max-width: 600px;
-    margin: 5rem auto;
+    margin: 2rem auto;
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 8px;
     position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
     animation: slideIn 0.3s ease-out;
 }
 
@@ -273,11 +284,37 @@ footer {
     }
 
     .modal-content {
-        margin: 2rem auto;
         width: 95%;
+        margin: 1rem auto;
+        padding: 1rem;
+    }
+
+    .product-list {
+        grid-template-columns: 1fr;
     }
 
     .farmer-card p strong {
         min-width: 80px;
     }
+}
+
+.image-upload {
+    margin-bottom: 1rem;
+}
+
+.image-upload label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.preview-container {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#image-preview {
+    max-width: 200px;
+    border-radius: 4px;
+    display: none;
 }

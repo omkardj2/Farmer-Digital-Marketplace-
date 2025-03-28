@@ -21,7 +21,7 @@ function fetchFarmerInfo() {
         document.getElementById('farmer-lastname').textContent = data.lastName;
         document.getElementById('farmer-email').textContent = data.email;
         document.getElementById('farmer-contact').textContent = data.contact;
-        document.getElementById('farmer-location').textContent = data.location;
+        document.getElementById('farmer-location').textContent = data.address;
         
         // Also populate edit form
         document.getElementById('edit-firstname').value = data.firstName;
@@ -38,7 +38,7 @@ function fetchFarmerInfo() {
 function fetchFarmerProducts() {
     fetch('http://127.0.0.1:3000/api/products', {
         method: 'GET',
-        credentials: 'include'  // ✅ Send cookies with the request
+        credentials: 'include'
     })
     .then(response => response.json())
     .then(data => {
@@ -53,7 +53,9 @@ function fetchFarmerProducts() {
         data.forEach(product => {
             const productCard = `
                 <div class="product-card">
-                    <img src="${product.image || './images/default-product.png'}" alt="${product.name}">
+                    <img src="${product.image || '../images/default-product.jpg'}" 
+                         alt="${product.name}"
+                         onerror="this.src='./images/default-product.jpg'">
                     <h3>${product.name}</h3>
                     <p>${product.description}</p>
                     <p>Price: ₹${product.price}</p>
@@ -65,7 +67,6 @@ function fetchFarmerProducts() {
     })
     .catch(err => console.error("Error fetching products:", err));
 }
-
 
 // ✅ Function to Read Cookie
 function getCookie(name) {
@@ -128,35 +129,81 @@ function setupEventListeners() {
         event.preventDefault();
         updateProfile();
     });
+
+    // logout handler
+    const logoutBtn = document.querySelector('.nav-link');
+    logoutBtn.addEventListener('click', async (event) => {
+        event.preventDefault();
+        try {
+            const response = await fetch('http://127.0.0.1:3000/auth/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+
+            if (response.ok) {
+                // Clear any client-side data
+                document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = 'lp.html';
+            } else {
+                throw new Error('Logout failed');
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+            alert('Logout failed. Please try again.');
+        }
+    });
 }
 
 // ✅ Add New Product with Cookies
+// Update addNewProduct function in farmer-dashboard.js
 function addNewProduct() {
-    const formData = {
-        name: document.getElementById('product-name').value,
-        image: document.getElementById('product-image').value,
-        description: document.getElementById('product-description').value,
-        price: parseFloat(document.getElementById('product-price').value),
-        quantity: parseInt(document.getElementById('product-quantity').value)
-    };
+    const formData = new FormData();
+    
+    formData.append('name', document.getElementById('product-name').value);
+    formData.append('description', document.getElementById('product-description').value);
+    formData.append('price', document.getElementById('product-price').value);
+    formData.append('quantity', document.getElementById('product-quantity').value);
+    
+    const imageFile = document.getElementById('product-image').files[0];
+    if (imageFile) {
+        formData.append('productImage', imageFile);
+    }
 
     fetch('http://127.0.0.1:3000/api/addProduct', {   
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include',  // ✅ Send cookies with the request
-        body: JSON.stringify(formData)
+        credentials: 'include',
+        body: formData // Don't set Content-Type header when sending FormData
     })
     .then(response => response.json())
     .then(() => {
         alert('Product added successfully!');
         document.getElementById('add-product-modal').style.display = 'none';
         document.getElementById('add-product-form').reset();
+        document.getElementById('image-preview').style.display = 'none';
         fetchFarmerProducts();
     })
-    .catch(err => console.error("Error adding product:", err));
+    .catch(err => {
+        console.error("Error adding product:", err);
+        alert('Failed to add product. Please try again.');
+    });
 }
+
+// Add image preview functionality
+document.getElementById('product-image').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('image-preview');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    }
+});
 
 // ✅ Update Profile Function
 function updateProfile() {

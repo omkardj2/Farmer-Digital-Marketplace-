@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <title>Product Detail page</title>
+    <title>Product Details</title>
     <link rel="stylesheet" href="./stylesheets/pdp.css">
-    <script defer src="./scripts/pdp.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
     <header>
@@ -14,104 +13,44 @@
             <img src="./images/logo.png" alt="GreenBasket Logo" class="logo-img">
             <span class="logo-text">GreenBasket</span>
         </div>
-        <div class="searchbar">
-            <input type="text" placeholder="Search...">
-            <div class="searchicon">
-                <i class="fa-brands fa-sistrix" style="color: black;"></i>
-            </div>
-        </div>
         <nav>
-            <a href="#" id="home"><i class="fa-solid fa-house" style="color:  #35ab6a;"></i> Home</a>
-            <a href="#" id="cart"><i class="fa-solid fa-cart-shopping" style="color: #35ab6a;"></i> Cart</a>
-            <a href="#" class="account">
-                <div id="acc-logo">A</div>
-            </a>
+            <a href="product-list.html"><i class="fa-solid fa-arrow-left"></i> Back to Products</a>
+            <a href="#" id="cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
         </nav>
     </header>
-    
-    <div class="container">
-        <div class="product-detail">
-            <div class="product-info">
-                <h2>Product Name</h2>
-                <p>Farmer Name - Location</p>
-                <p>Rating: ⭐⭐⭐⭐☆ (No of ratings)</p>
-                <img src="./images/apple product photo.jpg" alt="Product Image">
-                <div class="cart-controls">
-                    <button id="decrease">-</button>
-                    <span id="quantity">1</span>
-                    <button id="increase">+</button>
-                    <button class="add-to-cart">Add to Cart</button>
+
+    <main>
+        <div class="product-container">
+            <div class="product-image">
+                <img id="product-img" src="" alt="Product Image">
+            </div>
+            <div class="product-details">
+                <h1 id="product-name"></h1>
+                <p class="price">₹<span id="product-price"></span></p>
+                <p id="product-description"></p>
+                <div class="farmer-info">
+                    <p>Sold by: <span id="farmer-name"></span></p>
+                    <p>Location: <span id="farmer-location"></span></p>
                 </div>
-                <p class="price">Rs 230 (Rs 230/1kg)</p>
-                <p>360 items sold in past month</p>
-                <button class="share">Share</button>
-                <button class="review">Review</button>
+                <div class="quantity-selector">
+                    <label for="quantity">Quantity:</label>
+                    <select id="quantity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <button id="add-to-cart">Add to Cart</button>
             </div>
         </div>
-        
-        <div class="cart-summary">
-            <h3>Cart</h3>
-            <div class="cart-product-list">
-                <div class="items">
-                    <div class="item-image">
-                        <img src="./images/apple product photo.jpg">
-                    </div>
-                    <div class="item-info">
-                        <div id="item-info-1">
-                            <p>Product title<p>
-                            <a href="#"><i class="fa-solid fa-pencil" style="color:rgb(130, 120, 120)"></i></a>
-                        </div>
-                        <div id="item-info-2">
-                            <p id="price">Rs 120</p>
-                            <p id="count">x4</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="items">
-                    <div class="item-image">
-                        <img src="./images/apple product photo.jpg">
-                    </div>
-                    <div class="item-info">
-                        <div id="item-info-1">
-                            <p>Product title<p>
-                            <a href="#"><i class="fa-solid fa-pencil" style="color:rgb(130, 120, 120)"></i></a>
-                        </div>
-                        <div id="item-info-2">
-                            <p id="price">Rs 120</p>
-                            <p id="count">x4</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="items">
-                    <div class="item-image">
-                        <img src="./images/apple product photo.jpg">
-                    </div>
-                    <div class="item-info">
-                        <div id="item-info-1">
-                            <p>Product title<p>
-                            <a href="#"><i class="fa-solid fa-pencil" style="color:rgb(130, 120, 120)"></i></a>
-                        </div>
-                        <div id="item-info-2">
-                            <p id="price">Rs 120</p>
-                            <p id="count">x4</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p>Total: <strong>$600</strong></p>
-            <button class="next">Next</button>
-        </div>
-    </div>
+    </main>
 
     <footer>
-        <p id="footer">&copy; 2025 GreenBasket | Privacy | Terms | Sitemap</p>
-        <div class="social-icons">
-            <a href="#"><i class="fa-brands fa-facebook" style="color: #3fa5f3;"></i></a>
-            <a><i class="fa-brands fa-instagram" style="color: #e66599;"></i></a>
-            <a><i class="fa-brands fa-whatsapp" style="color: #04be07;"></i></a>
-            <a href="#"><i class="fa-brands fa-twitter" style="color: #39a3f3;"></i></a>
-            
-        </div>
+        <p>&copy; 2025 GreenBasket | Privacy | Terms | Sitemap</p>
     </footer>
+
+    <script src="./scripts/pdp.js"></script>
 </body>
 </html>
