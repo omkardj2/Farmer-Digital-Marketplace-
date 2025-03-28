@@ -16,7 +16,7 @@ async function register(req , res){
     
     if(role == "farmer"){
         let existing = await farmerModel.findOne({email});
-        if(existing) return res.json({message:"user already exists"});
+        if(existing) return res.status(400).json({message:"user already exists"});
 
         try{
             bcrypt.genSalt(10 , function( err , salt ){
@@ -37,7 +37,7 @@ async function register(req , res){
     }else if(role == "customer"){
 
         let existing = await customerModel.findOne({email});
-        if(existing) return res.json({message:"user already exists"});
+        if(existing) return res.status(400).json({message:"user already exists"});
         try{
             bcrypt.genSalt(10 , function( err , salt ){
                 bcrypt.hash(password , salt , async function(err , hash){

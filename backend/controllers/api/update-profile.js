@@ -13,7 +13,8 @@ module.exports = async function updateProfile(req,res){
             firstName,
             lastName,
             email,
-            contact
+            contact,
+            address: location
         });
 
         if(!farmer){return res.status(400).json({message:'Farmer not found'})};

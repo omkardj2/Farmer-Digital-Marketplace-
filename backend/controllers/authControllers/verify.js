@@ -4,7 +4,6 @@ module.exports = async function verifyToken(req, res) {
     try {
         // ✅ Check if the cookie exists
         const token = req.cookies?.authToken;
-        console.log(token);
         if (!token) {
             return res.status(401).json({ 
                 success: false, 
@@ -14,7 +13,6 @@ module.exports = async function verifyToken(req, res) {
 
         // ✅ Verify the token using async/await
         const decoded = await jwt.verify(token, process.env.JWT_KEY);
-        console.log(decoded);
         
         // ✅ Send consistent response format
         res.status(200).json({

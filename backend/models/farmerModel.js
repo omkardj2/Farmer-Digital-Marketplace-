@@ -6,6 +6,8 @@ const farmerSchema = mongoose.Schema({
     email: String,
     password: String,
     contact: Number,
+    address: String,
+    profilepic:String,
     products:[
         {
             type: mongoose.Schema.Types.ObjectId,

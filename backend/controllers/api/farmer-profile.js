@@ -22,7 +22,7 @@ module.exports = async function farmerInfo(req, res) {
             lastName: farmer.lastName,
             email: farmer.email,
             contact: farmer.contact,
-            location: farmer.location
+            address: farmer.address
         });
     } catch (error) {
         console.error("Error:", error);
