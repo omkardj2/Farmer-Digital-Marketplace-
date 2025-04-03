@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Status Dashboard</title>
+    <link rel="stylesheet" href="./stylesheets/delivery-dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Delivery Status Dashboard</h1>
+
+        <div class="controls">
+            <input type="text" id="search" placeholder="Search by Order ID..." onkeyup="filterTable()">
+            <select id="statusFilter" onchange="filterTable()">
+                <option value="">All Statuses</option>
+                <option value="In Transit">In Transit</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Delayed">Delayed</option>
+            </select>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Status</th>
+                    <th>Delivery Partner</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="deliveryTable">
+                <!-- Data will be inserted dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./scripts/delivery-dashboard.js"></script>
+</body>
+</html>
