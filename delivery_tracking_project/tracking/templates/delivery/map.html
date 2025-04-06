@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delivery Tracking Map</title>
+    <style>
+        #map { height: 500px; width: 100%; }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <h1>Delivery Tracking Map</h1>
+    <div id="map"></div>
+
+    <!-- Pass JSON data safely -->
+    <script>
+        // Using JSON.parse safely
+        var deliveryData = JSON.parse(JSON.stringify({{ delivery_data|safe }}));
+
+        var map = L.map('map').setView([18.5204, 73.8567], 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add markers to the map
+        deliveryData.forEach(function(delivery) {
+            L.marker([delivery.lat, delivery.lng]).addTo(map)
+                .bindPopup("<b>Delivery ID:</b> " + delivery.id + "<br><b>Status:</b> " + delivery.status);
+        });
+
+        console.log("Delivery Data: ", deliveryData);
+    </script>
+</body>
+</html>
