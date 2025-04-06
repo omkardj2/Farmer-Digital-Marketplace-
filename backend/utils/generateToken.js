@@ -1,14 +1,18 @@
 const jwt = require('jsonwebtoken');
 
-function generateToken(user) {
+function generateToken(user, role) {
+    if (!process.env.JWT_KEY) {
+        throw new Error('JWT_KEY is not configured');
+    }
+
     return jwt.sign(
         {
-            email: user.email,
             id: user._id,
-            // Add role based on the model being used
-            role: user.constructor.modelName.toLowerCase() // This will give 'farmer' or 'customer'
+            email: user.email,
+            role: role // Use the explicit role passed from login
         },
-        process.env.JWT_KEY
+        process.env.JWT_KEY,
+        { expiresIn: '24h' }
     );
 }
 

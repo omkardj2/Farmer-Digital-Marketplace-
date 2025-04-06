@@ -1,4 +1,4 @@
-const farmerModel = require('../../models/farmerModel');
+const farmerModel = require('../../../models/farmerModel');
 const jwt = require('jsonwebtoken');
 
 module.exports = async function farmerInfo(req, res) {

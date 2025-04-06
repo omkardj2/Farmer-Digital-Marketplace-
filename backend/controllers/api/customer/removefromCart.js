@@ -1,4 +1,4 @@
-const customerModel = require('../../models/customerModel');
+const customerModel = require('../../../models/customerModel');
 const jwt = require('jsonwebtoken');
 
 module.exports = async function removeFromCart(req, res) {
