@@ -51,7 +51,9 @@ function displayProducts(products) {
         const productCard = `
             <div class="product-card">
                 <div class="product-image">
-                    <img src="${product.image || './images/default-product.jpg'}" alt="${product.name}">
+                    <img src="${product.image}" 
+                         alt="${product.name}"
+                         onerror="this.src='./images/default-product.jpg'">
                 </div>
                 <div class="product-info">
                     <h3>${product.name}</h3>

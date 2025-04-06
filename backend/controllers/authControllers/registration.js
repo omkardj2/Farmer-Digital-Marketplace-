@@ -26,7 +26,8 @@ async function register(req , res){
                         lastName,
                         email,
                         password: hash,
-                        contact
+                        contact,
+                        profilepic: '../../uploads/profiles/avatar.png'
                     });
                     return res.status(201).json(farmer);
                 })
@@ -46,7 +47,8 @@ async function register(req , res){
                         lastName,
                         email,
                         password: hash,
-                        contact
+                        contact,
+                        profilepic: '../../uploads/profiles/avatar.png'
                     })
                     return res.status(201).json(customer)
                 })

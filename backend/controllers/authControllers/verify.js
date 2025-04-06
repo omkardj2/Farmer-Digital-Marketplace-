@@ -18,7 +18,8 @@ module.exports = async function verifyToken(req, res) {
         res.status(200).json({
             success: true,
             verified: true,
-            userId: decoded.id
+            userId: decoded.id,
+            role: decoded.role
         });
 
     } catch (error) {

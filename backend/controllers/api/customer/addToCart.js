@@ -1,5 +1,5 @@
-const customerModel = require('../../models/customerModel');
-const productModel = require('../../models/productModel');
+const customerModel = require('../../../models/customerModel');
+const productModel = require('../../../models/productModel');
 const jwt = require('jsonwebtoken');
 
 module.exports = async function addToCart(req, res) {

@@ -2,14 +2,11 @@ const Product = require('../../models/productModel');
 
 exports.getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find()
-            .populate('farmer', 'firstName lastName location')
-            .select('name description price image quantity farmer');
-
+        const products = await Product.find().select('name category price quantity image');
         res.status(200).json(products);
     } catch (error) {
         console.error('Error fetching products:', error);
-        res.status(500).json({ message: 'Error fetching products' });
+        res.status(500).json({ message: 'Failed to fetch products' });
     }
 };
 

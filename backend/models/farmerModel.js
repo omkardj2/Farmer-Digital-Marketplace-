@@ -7,7 +7,10 @@ const farmerSchema = mongoose.Schema({
     password: String,
     contact: Number,
     address: String,
-    profilepic:String,
+    profilepic:{
+        type:String,
+        default: '/uploads/profiles/default-avatar.png'
+    },
     products:[
         {
             type: mongoose.Schema.Types.ObjectId,
