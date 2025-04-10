@@ -54,7 +54,7 @@ module.exports = async function createOrder(req, res) {
                 street: deliveryDetails.address,
                 city: deliveryDetails.city,
                 pincode: deliveryDetails.pincode
-            },
+            }, 
             paymentMethod,
             paymentStatus: paymentMethod === 'cod' ? 'pending' : 'completed'
         });

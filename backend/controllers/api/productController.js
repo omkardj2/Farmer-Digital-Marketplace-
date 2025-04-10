@@ -12,31 +12,17 @@ exports.getAllProducts = async (req, res) => {
 
 exports.getProductById = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id)
-            .populate('farmer', 'firstName lastName address');
+        const productId = req.params.id;
+        const product = await Product.findById(productId).populate('farmer', 'firstName lastName location');
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        const formattedProduct = {
-            _id: product._id,
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            quantity: product.quantity,
-            image: product.image,
-            farmer: {
-                firstName: product.farmer.firstName,
-                lastName: product.farmer.lastName,
-                location: product.farmer.address
-            }
-        };
-
-        res.status(200).json(formattedProduct);
+        res.status(200).json(product);
     } catch (error) {
         console.error('Error fetching product:', error);
-        res.status(500).json({ message: 'Error fetching product details' });
+        res.status(500).json({ message: 'Failed to fetch product' });
     }
 };
 

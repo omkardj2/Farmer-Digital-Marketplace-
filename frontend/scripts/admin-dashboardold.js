@@ -1,10 +1,8 @@
-//admin-dashboard.js
 document.addEventListener('DOMContentLoaded', () => {
     checkAdminAuth();
     setupEventListeners();
     loadDashboardData();
     initializeCharts();
-    loadApprovals(); // Add this line to load approvals on page load
 });
 
 async function checkAdminAuth() {
@@ -13,7 +11,7 @@ async function checkAdminAuth() {
             credentials: 'include'
         });
         const data = await response.json();
-
+        
         if (!response.ok || !data.isAdmin) {
             window.location.href = 'lp.html';
         }
@@ -32,6 +30,10 @@ function setupEventListeners() {
     // Logout
     document.querySelector('.logout').addEventListener('click', handleLogout);
 
+    // Search functionality
+    // document.querySelector('.search-bar input').addEventListener('input', 
+    //     debounce(handleSearch, 300));
+
     // Filters
     document.getElementById('user-role-filter')?.addEventListener('change', loadUsers);
     document.getElementById('product-category-filter')?.addEventListener('change', loadProducts);
@@ -45,6 +47,9 @@ function setupEventListeners() {
             });
         });
     });
+
+    // Forms
+    // document.getElementById('user-form')?.addEventListener('submit', handleUserSubmit);
 }
 
 async function loadDashboardData() {
@@ -53,12 +58,14 @@ async function loadDashboardData() {
             credentials: 'include'
         });
         const data = await response.json();
+        console.log(data);
 
         // Update stats
         document.getElementById('total-users').textContent = data.totalUsers;
         document.getElementById('active-orders').textContent = data.activeOrders;
         document.getElementById('total-products').textContent = data.totalProducts;
-        document.getElementById('total-revenue').textContent = `₹${data.totalRevenue.toFixed(2)}`;
+        document.getElementById('total-revenue').textContent = 
+            `₹${data.totalRevenue.toFixed(2)}`;
 
         // Update charts
         updateCharts(data.chartData);
@@ -69,19 +76,8 @@ async function loadDashboardData() {
 }
 
 function initializeCharts() {
-    const salesCanvas = document.getElementById('sales-chart');
-    const productsCanvas = document.getElementById('products-chart');
-
-    // Destroy existing charts if they exist
-    if (window.salesChart) {
-        window.salesChart.destroy();
-    }
-    if (window.productsChart) {
-        window.productsChart.destroy();
-    }
-
     // Sales Chart
-    const salesCtx = salesCanvas.getContext('2d');
+    const salesCtx = document.getElementById('sales-chart').getContext('2d');
     window.salesChart = new Chart(salesCtx, {
         type: 'line',
         data: {
@@ -95,17 +91,12 @@ function initializeCharts() {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+            maintainAspectRatio: false
         }
     });
 
     // Products Chart
-    const productsCtx = productsCanvas.getContext('2d');
+    const productsCtx = document.getElementById('products-chart').getContext('2d');
     window.productsChart = new Chart(productsCtx, {
         type: 'doughnut',
         data: {
@@ -128,29 +119,27 @@ function initializeCharts() {
     });
 }
 
-
 function updateCharts(data) {
     // Update Sales Chart
-    // window.salesChart.data.labels = data.salesLabels;
-    // window.salesChart.data.datasets[0].data = data.salesData;
+    window.salesChart.data.labels = data.salesLabels;
+    window.salesChart.data.datasets[0].data = data.salesData;
     window.salesChart.update();
 
     // Update Products Chart
-   // window.productsChart.data.labels = data.productLabels;
-    //window.productsChart.data.datasets[0].data = data.productData;
+    window.productsChart.data.labels = data.productLabels;
+    window.productsChart.data.datasets[0].data = data.productData;
     window.productsChart.update();
 }
-
 
 async function loadUsers() {
     const roleFilter = document.getElementById('user-role-filter').value;
     try {
-        const response = await fetch(`http://127.0.0.1:3000/admin/users?role=${roleFilter}`, {
+        const response = await fetch(
+            `http://127.0.0.1:3000/admin/users?role=${roleFilter}`, {
             credentials: 'include'
         });
         const users = await response.json();
-        console.log(users); 
-
+        
         const tbody = document.querySelector('#users-table tbody');
         tbody.innerHTML = users.map(user => `
             <tr>
@@ -181,11 +170,12 @@ async function loadUsers() {
 async function loadProducts() {
     const categoryFilter = document.getElementById('product-category-filter').value;
     try {
-        const response = await fetch(`http://127.0.0.1:3000/admin/products?category=${categoryFilter}`, {
+        const response = await fetch(
+            `http://127.0.0.1:3000/admin/products?category=${categoryFilter}`, {
             credentials: 'include'
         });
         const products = await response.json();
-
+        
         const tbody = document.querySelector('#products-table tbody');
         tbody.innerHTML = products.map(product => `
             <tr>
@@ -216,11 +206,12 @@ async function loadProducts() {
 async function loadOrders() {
     const statusFilter = document.getElementById('order-status-filter').value;
     try {
-        const response = await fetch(`http://127.0.0.1:3000/admin/orders?status=${statusFilter}`, {
+        const response = await fetch(
+            `http://127.0.0.1:3000/admin/orders?status=${statusFilter}`, {
             credentials: 'include'
         });
         const orders = await response.json();
-
+        
         const tbody = document.querySelector('#orders-table tbody');
         tbody.innerHTML = orders.map(order => `
             <tr>
@@ -231,10 +222,14 @@ async function loadOrders() {
                 <td>
                     <select onchange="updateOrderStatus('${order._id}', this.value)"
                             class="status-select ${order.status}">
-                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
-                        <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Processing</option>
-                        <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Shipped</option>
-                        <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                        <option value="pending" 
+                            ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="processing"
+                            ${order.status === 'processing' ? 'selected' : ''}>Processing</option>
+                        <option value="shipped"
+                            ${order.status === 'shipped' ? 'selected' : ''}>Shipped</option>
+                        <option value="delivered"
+                            ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
                     </select>
                 </td>
                 <td>${new Date(order.date).toLocaleDateString()}</td>
@@ -251,34 +246,10 @@ async function loadOrders() {
     }
 }
 
-async function loadApprovals() {
-    try{
-        const response = await fetch(`http://127.0.0.1:3000/admin/approvals`, {
-            credentials: 'include'
-        });
-        const approvals = await response.json();
-        const approvalList = document.getElementById('approval-list');
-        approvalList.innerHTML = approvals.map(approval => `
-            <div class="approval-card">
-                <h3>${approval.type} Approval</h3>
-                <p>User: ${approval.user.firstName} ${approval.user.lastName}</p>
-                <p>Details: ${approval.details}</p>
-                <div class="approval-actions">
-                    <button class="approve-btn" onclick="approveApproval('${approval._id}')">Approve</button>
-                    <button class="reject-btn" onclick="rejectApproval('${approval._id}')">Reject</button>
-                </div>
-            </div>
-        `).join('');
-    }catch (error){
-        console.error('Failed to load approvals: ', error);
-        showToast('Failed to load approvals', 'error');
-    }
-}
-
 function handleNavigation(event) {
     event.preventDefault();
     const section = event.currentTarget.dataset.section;
-
+    
     // Update active nav item
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
@@ -292,7 +263,7 @@ function handleNavigation(event) {
     document.getElementById(section).classList.add('active');
 
     // Load section data
-    switch (section) {
+    switch(section) {
         case 'users':
             loadUsers();
             break;
@@ -331,7 +302,7 @@ function showToast(message, type = 'info') {
     toast.className = `toast ${type}`;
     toast.textContent = message;
     document.body.appendChild(toast);
-
+    
     setTimeout(() => {
         toast.remove();
     }, 3000);

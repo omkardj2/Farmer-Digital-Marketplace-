@@ -44,24 +44,48 @@ const adminController = {
         try {
             const { role } = req.query;
             let users = [];
-
+    
             if (role === 'customer') {
                 users = await Customer.find().select('-password');
+                users = users.map(user => ({
+                    ...user.toObject(),
+                    role: 'customer',
+                    status: user.status || 'active'  // fallback if status isn't set
+                }));
             } else if (role === 'farmer') {
                 users = await Farmer.find().select('-password');
+                users = users.map(user => ({
+                    ...user.toObject(),
+                    role: 'farmer',
+                    status: user.status || 'active'
+                }));
             } else {
                 const [customers, farmers] = await Promise.all([
                     Customer.find().select('-password'),
                     Farmer.find().select('-password')
                 ]);
-                users = [...customers, ...farmers];
+    
+                const customerUsers = customers.map(user => ({
+                    ...user.toObject(),
+                    role: 'customer',
+                    status: user.status || 'active'
+                }));
+    
+                const farmerUsers = farmers.map(user => ({
+                    ...user.toObject(),
+                    role: 'farmer',
+                    status: user.status || 'active'
+                }));
+    
+                users = [...customerUsers, ...farmerUsers];
             }
-
+    
             res.json(users);
         } catch (error) {
             res.status(500).json({ message: 'Failed to fetch users' });
         }
     },
+    
 
     async createUser(req, res) {
         try {

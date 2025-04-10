@@ -66,5 +66,3 @@ function trackDelivery(orderId) {
 // Initialize
 populateTable();
 simulateRealTimeUpdates();
-
-

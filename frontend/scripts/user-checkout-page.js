@@ -126,7 +126,7 @@ function validateCard() {
     return true;
 }
 
-function placeOrder() {
+async function placeOrder() {
     const orderData = {
         deliveryDetails: {
             name: document.getElementById('name').value,
@@ -135,8 +135,14 @@ function placeOrder() {
             city: document.getElementById('city').value,
             pincode: document.getElementById('pincode').value
         },
-        paymentMethod: document.querySelector('input[name="payment"]:checked').value
+        paymentMethod: document.querySelector('input[name="payment"]:checked').value,
+        paymentStatus: document.querySelector('input[name="payment"]:checked').value === 'cod' ? 'pending' : 'processing'
     };
+
+    // Show loading state
+    const placeOrderBtn = document.getElementById('place-order');
+    placeOrderBtn.disabled = true;
+    placeOrderBtn.textContent = 'Placing Order...';
 
     fetch('http://127.0.0.1:3000/api/orders/create', {
         method: 'POST',
@@ -145,15 +151,66 @@ function placeOrder() {
         },
         credentials: 'include',
         body: JSON.stringify(orderData)
+    }) 
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to place order');
+        }
+        return response.json();
     })
-    .then(response => response.json())
     .then(data => {
-        alert('Order placed successfully!');
-        window.location.href = 'order-confirmation.html?id=' + data.orderId;
+        // Notify farmers about the new order
+        notifyFarmers(data.orderId);
+        
+        // Show success message
+        showToast('Order placed successfully!', 'success');
+        
+        // Redirect to confirmation page
+        setTimeout(() => {
+            window.location.href = `order-confirmation.html?id=${data.orderId}`;
+        }, 1500);
     })
     .catch(err => {
         console.error('Error placing order:', err);
-        alert('Failed to place order. Please try again.');
+        showToast('Failed to place order. Please try again.', 'error');
+        
+        // Reset button state
+        placeOrderBtn.disabled = false;
+        placeOrderBtn.textContent = 'Place Order';
     });
+}
+
+// Add function to notify farmers
+async function notifyFarmers(orderId) {
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/api/orders/${orderId}/notify-farmers`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to notify farmers');
+        }
+
+        console.log('Farmers notified successfully');
+    } catch (error) {
+        console.error('Error notifying farmers:', error);
+    }
+}
+
+// Add toast notification function
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('fade-out');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 }
 

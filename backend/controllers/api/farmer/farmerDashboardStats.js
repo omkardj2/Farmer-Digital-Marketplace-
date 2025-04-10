@@ -4,7 +4,6 @@ const Order = require('../../../models/orderModel');
 async function getDashboardStats(req, res) {
     try {
         const farmerId = req.user.id;
-        console.log(farmerId);
 
         // Get basic stats
         const totalProducts = await Product.countDocuments({ farmer: farmerId });
@@ -35,6 +34,7 @@ async function getDashboardStats(req, res) {
             }, 0);
 
         // Send response
+        console.log(totalProducts);
         res.json({
             success: true,
             stats: {

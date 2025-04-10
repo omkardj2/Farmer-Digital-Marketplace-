@@ -10,20 +10,6 @@ const farmerRouter = require("./routes/farmerRouter");
 const adminRouter = require('./routes/adminRouter');
 const api = require('./routes/api');
 
-// const passport = require('passport');
-// //const session = require('express-session');
-// require('./config/passport-setup');
-
-// app.use(session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false
-// }));
-
-// // Initialize Passport
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 app.use(cors({
     origin: 'http://127.0.0.1:5500',
     credentials: true,

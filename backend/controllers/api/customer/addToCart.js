@@ -1,4 +1,4 @@
-const customerModel = require('../../../models/customerModel');
+const Cart = require('../../../models/cartModel');
 const productModel = require('../../../models/productModel');
 const jwt = require('jsonwebtoken');
 
@@ -18,7 +18,8 @@ module.exports = async function addToCart(req, res) {
 
         // Verify token and get customer ID
         const decoded = jwt.verify(authToken, process.env.JWT_KEY);
-        
+        const customerId = decoded.id;
+
         // Check if product exists
         const product = await productModel.findById(productId);
         if (!product) {
@@ -30,52 +31,41 @@ module.exports = async function addToCart(req, res) {
             return res.status(400).json({ message: 'Not enough stock available' });
         }
 
-        // Find customer and update cart
-        const customer = await customerModel.findById(decoded.id);
-        if (!customer) {
-            return res.status(404).json({ message: 'Customer not found' });
+        // Find or create the cart for the customer
+        let cart = await Cart.findOne({ customer: customerId });
+        if (!cart) {
+            cart = new Cart({
+                customer: customerId,
+                items: []
+            });
         }
 
-        // Check if product already exists in cart
-        const existingCartItem = customer.cart.find(item => 
+        // Check if product already exists in the cart
+        const existingCartItem = cart.items.find(item => 
             item.product.toString() === productId
         );
 
         if (existingCartItem) {
             // Update quantity if product already in cart
-            await customerModel.updateOne(
-                { 
-                    _id: decoded.id,
-                    'cart.product': productId 
-                },
-                { 
-                    $set: { 
-                        'cart.$.quantity': existingCartItem.quantity + quantity 
-                    }
-                }
-            );
+            existingCartItem.quantity += quantity;
         } else {
             // Add new product to cart
-            await customerModel.findByIdAndUpdate(
-                decoded.id,
-                { 
-                    $push: { 
-                        cart: {
-                            product: productId,
-                            quantity: quantity
-                        }
-                    }
-                }
-            );
+            cart.items.push({
+                product: productId,
+                quantity: quantity
+            });
         }
 
-        // Get updated cart with populated product details
-        const updatedCustomer = await customerModel.findById(decoded.id)
-            .populate('cart.product');
+        // Save the cart
+        await cart.save();
+
+        // Populate product details in the response
+        const updatedCart = await Cart.findOne({ customer: customerId })
+            .populate('items.product');
 
         res.status(200).json({
             message: 'Product added to cart successfully',
-            cart: updatedCustomer.cart
+            cart: updatedCart.items
         });
 
     } catch (error) {

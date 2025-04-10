@@ -183,7 +183,7 @@ async function loadFarmerProfile() {
 
 async function loadDashboardStats() {
     try {
-        const response = await fetch('http://127.0.0.1:3000/users/dashboard-stats', {
+        const response = await fetch('http://127.0.0.1:3000/farmer/dashboard-stats', {
             credentials: 'include', // Include cookies
         });
 
@@ -192,9 +192,18 @@ async function loadDashboardStats() {
         }
 
         const stats = await response.json();
-        console.log('Dashboard stats:', stats);
+        console.log(stats);
+        console.log(stats.stats.totalProducts);
+
+        // Update the DOM with the fetched stats
+        document.getElementById('total-products').textContent = stats.stats.totalProducts ||0;
+        document.getElementById('active-orders').textContent = stats.stats.activeOrders || 0;
+        document.getElementById('total-revenue').textContent = `₹${stats.stats.totalRevenue || 0}`;
+        document.getElementById('monthly-revenue').textContent = `₹${stats.stats.monthlyRevenue || 0}`;
+
     } catch (error) {
         console.error('Failed to load dashboard stats:', error);
+        showToast('Failed to load dashboard stats', 'error');
     }
 }
 
@@ -363,8 +372,8 @@ async function handleProfileUpdate(event) {
     event.preventDefault();
     
     try {
-        const response = await fetch('http://127.0.0.1:3000/farmer/profile', {
-            method: 'PUT',
+        const response = await fetch('http://127.0.0.1:3000/api/update-profile', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },

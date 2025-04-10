@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="dashboard-container">
+        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo-container">
                 <img src="./images/logo.png" alt="GreenBasket Logo" class="logo-img">
@@ -36,6 +37,7 @@
             </nav>
         </aside>
 
+        <!-- Main Content -->
         <main class="main-content">
             <header class="top-bar">
                 <div class="search-bar">
@@ -48,6 +50,7 @@
                 </div>
             </header>
 
+            <!-- Dashboard Overview Section -->
             <section id="dashboard" class="content-section active">
                 <h2>Dashboard Overview</h2>
                 <div class="stats-grid">
@@ -92,6 +95,7 @@
                 </div>
             </section>
 
+            <!-- Users Management Section -->
             <section id="users" class="content-section">
                 <h2>User Management</h2>
                 <div class="table-actions">
@@ -118,11 +122,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            </tbody>
+                            <!-- Users will be loaded dynamically -->
+                        </tbody>
                     </table>
                 </div>
             </section>
 
+            <!-- Products Management Section -->
             <section id="products" class="content-section">
                 <h2>Product Management</h2>
                 <div class="table-actions">
@@ -149,11 +155,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            </tbody>
+                            <!-- Products will be loaded dynamically -->
+                        </tbody>
                     </table>
                 </div>
             </section>
 
+            <!-- Orders Management Section -->
             <section id="orders" class="content-section">
                 <h2>Order Management</h2>
                 <div class="table-actions">
@@ -181,21 +189,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            </tbody>
+                            <!-- Orders will be loaded dynamically -->
+                        </tbody>
                     </table>
                 </div>
             </section>
 
+            <!-- Approvals Section -->
             <section id="approvals" class="content-section">
                 <h2>Pending Approvals</h2>
                 <div class="approvals-container">
                     <div class="approval-cards" id="approval-list">
-                        </div>
+                        <!-- Approval cards will be loaded dynamically -->
+                    </div>
                 </div>
             </section>
         </main>
     </div>
 
+    <!-- Modals -->
     <div id="user-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>

@@ -92,10 +92,18 @@ async function loadDashboardStats() {
 
         const stats = await response.json();
         console.log('Dashboard stats:', stats);
+
+        // Update DOM elements with the stats
+        document.getElementById('total-orders').textContent = stats.totalOrders || 0;
+        document.getElementById('wishlist-count').textContent = stats.wishlistItems || 0;
+        document.getElementById('cart-count').textContent = stats.cartItems || 0;
+        document.getElementById('total-spent').textContent = `₹${(stats.totalSpent || 0).toFixed(2)}`;
+
     } catch (error) {
         console.error('Failed to load dashboard stats:', error);
     }
 }
+
 
 async function loadRecentOrders() {
     try {

@@ -1,4 +1,4 @@
-const customerModel = require('../../../models/customerModel');
+const Cart = require('../../../models/cartModel');
 const jwt = require('jsonwebtoken');
 
 module.exports = async function getCart(req, res) {
@@ -8,16 +8,19 @@ module.exports = async function getCart(req, res) {
             return res.status(401).json({ message: 'No token found' });
         }
 
+        // Verify the token and get the customer ID
         const decoded = jwt.verify(authToken, process.env.JWT_KEY);
-        
-        const customer = await customerModel.findById(decoded.id)
-            .populate('cart.product');
+        const customerId = decoded.id;
 
-        if (!customer) {
-            return res.status(404).json({ message: 'Customer not found' });
+        // Fetch the cart for the customer from the Cart model
+        const cart = await Cart.findOne({ customer: customerId }).populate('items.product');
+
+        if (!cart || cart.items.length === 0) {
+            return res.status(200).json({ items: [] }); // Return an empty cart if no items exist
         }
 
-        const cartItems = customer.cart.map(item => ({
+        // Map the cart items to include product details
+        const cartItems = cart.items.map(item => ({
             _id: item.product._id,
             name: item.product.name,
             price: item.product.price,
