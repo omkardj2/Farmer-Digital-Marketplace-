@@ -1,61 +1,65 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-const mongoose_connection = require('../../config/mongoose-connection')
 const customerModel = require("../../models/customerModel");
 const farmerModel = require("../../models/farmerModel");
-
-const cookieParser = require('cookie-parser');
-const generateToken = require('../../utils/generateToken')
+const generateToken = require('../../utils/generateToken');
 
 async function register(req , res){
-    let{firstName , lastName , email , password , contact , role} = req.body;
-    if(!firstName || !lastName || !email || !password || !role){
-        return res.status(400).json({message: "All fields are required"});
+    let { firstName, lastName, email, password, contact, role } = req.body;
+
+    if (!firstName || !lastName || !email || !password || !role) {
+        return res.status(400).json({ message: "All fields are required" });
     }
-    
-    if(role == "farmer"){
-        let existing = await farmerModel.findOne({email});
-        if(existing) return res.status(400).json({message:"user already exists"});
 
-        try{
-            bcrypt.genSalt(10 , function( err , salt ){
-                bcrypt.hash(password , salt , async function(err , hash){
-                    let farmer = await farmerModel.create({
-                        firstName,
-                        lastName,
-                        email,
-                        password: hash,
-                        contact,
-                        profilepic: '../../uploads/profiles/avatar.png'
-                    });
-                    return res.status(201).json(farmer);
-                })
-            })
-        }catch(err){
-            res.send(err).status(500);
-        }
-    }else if(role == "customer"){
+    try {
+        let existing;
+        let user;
+        if (role === "farmer") {
+            existing = await farmerModel.findOne({ email });
+            if (existing) return res.status(400).json({ message: "User already exists" });
 
-        let existing = await customerModel.findOne({email});
-        if(existing) return res.status(400).json({message:"user already exists"});
-        try{
-            bcrypt.genSalt(10 , function( err , salt ){
-                bcrypt.hash(password , salt , async function(err , hash){
-                    let customer = await customerModel.create({
-                        firstName,
-                        lastName,
-                        email,
-                        password: hash,
-                        contact,
-                        profilepic: '../../uploads/profiles/avatar.png'
-                    })
-                    return res.status(201).json(customer)
-                })
-            })
-        }catch(err){
-            return res.status(500).json({message: "Server Error" , error:err});
+            const hash = await bcrypt.hash(password, 10);
+            user = await farmerModel.create({
+                firstName,
+                lastName,
+                email,
+                password: hash,
+                contact,
+                profilepic: '../../uploads/profiles/avatar.png'
+            });
+        } else if (role === "customer") {
+            existing = await customerModel.findOne({ email });
+            if (existing) return res.status(400).json({ message: "User already exists" });
+
+            const hash = await bcrypt.hash(password, 10);
+            user = await customerModel.create({
+                firstName,
+                lastName,
+                email,
+                password: hash,
+                contact,
+                profilepic: '../../uploads/profiles/avatar.png'
+            });
+        } else {
+            return res.status(400).json({ message: "Invalid role" });
         }
+
+        const token = generateToken(user, role);
+
+        // ✅ Set cookie properly
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: false, // use true in production
+            sameSite: 'Lax',
+            path: '/',
+            maxAge: 24 * 60 * 60 * 1000
+        });
+
+        return res.status(201).json({ message: 'Registration successful' });
+
+    } catch (err) {
+        console.error("Registration error:", err);
+        return res.status(500).json({ message: "Server error", error: err.message });
     }
 }
 

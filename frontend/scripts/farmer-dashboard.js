@@ -79,6 +79,22 @@ function setupEventListeners() {
     // Set initial active section
     document.getElementById('dashboard').classList.add('active');
     document.querySelector('.nav-item[data-section="dashboard"]')?.classList.add('active');
+
+    // Close order details modal
+    document.querySelectorAll('#order-details-modal .close-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+        document.getElementById('order-details-modal').style.display = 'none';
+        });
+    });
+
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('order-details-modal');
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+      
+  
 }
 
 async function handleSearch(event) {
@@ -257,11 +273,12 @@ async function loadOrders() {
     try {
         const status = document.getElementById('order-status-filter').value;
         const response = await fetch(
-            `http://127.0.0.1:3000/farmer/orders?status=${status}`, {
+            `http://127.0.0.1:3000/farmer/orders`, {
             credentials: 'include'
         });
         
         const orders = await response.json();
+        console.log(orders);
         const tbody = document.querySelector('#orders-table tbody');
         
         tbody.innerHTML = orders.map(order => `
@@ -269,7 +286,7 @@ async function loadOrders() {
                 <td>#${order._id.slice(-6)}</td>
                 <td>${order.customer.firstName} ${order.customer.lastName}</td>
                 <td>${order.items.length} items</td>
-                <td>₹${order.total.toFixed(2)}</td>
+                <td>₹${order.total}</td>
                 <td>
                     <select onchange="updateOrderStatus('${order._id}', this.value)"
                             class="status-select ${order.status}">
@@ -619,18 +636,39 @@ async function updateOrderStatus(orderId, status) {
 
 async function viewOrderDetails(orderId) {
     try {
-        const response = await fetch(`http://127.0.0.1:3000/farmer/orders/${orderId}`, {
-            credentials: 'include'
-        });
-        
-        const order = await response.json();
-        
-        // Implement order details view logic here
-        // You might want to show this in a modal
-        console.log('Order details:', order);
-
+      const response = await fetch(`http://127.0.0.1:3000/farmer/orders/${orderId}`, {
+        credentials: 'include'
+      });
+  
+      const order = await response.json();
+  
+      const modal = document.getElementById('order-details-modal');
+      const content = document.getElementById('order-details-content');
+  
+      // Build the order detail content
+      content.innerHTML = `
+        <h3>Order #${order._id.slice(-6)}</h3>
+        <p><strong>Customer:</strong> ${order.customer.firstName} ${order.customer.lastName}</p>
+        <p><strong>Email:</strong> ${order.customer.email}</p>
+        <p><strong>Date:</strong> ${new Date(order.date).toLocaleDateString()}</p>
+        <p><strong>Status:</strong> ${order.status}</p>
+        <h4>Products:</h4>
+        <ul>
+          ${order.items.map(item => `
+            <li>
+              ${item.product.name} - ₹${item.product.price} x ${item.quantity} = ₹${(item.product.price * item.quantity).toFixed(2)}
+            </li>
+          `).join('')}
+        </ul>
+        <p><strong>Total:</strong> ₹${order.total.toFixed(2)}</p>
+      `;
+  
+      // Show the modal
+      modal.style.display = 'block';
+  
     } catch (error) {
-        console.error('View order details error:', error);
-        showToast('Failed to load order details', 'error');
+      console.error('View order details error:', error);
+      showToast('Failed to load order details', 'error');
     }
-}
+  }
+  

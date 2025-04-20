@@ -56,11 +56,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     role: role.value
                 })
             });
-
+            console.log(role.value);
             if (response.ok) {
                 alert("Account created successfully!");
-                form.reset();
-                window.location.href = 'lp.html'; // Redirect to login page
+                if(role.value=='farmer')
+                    window.location.href = 'farmer-dashboard.html';
+                else if(role.value=='customer')
+                    window.location.href = 'product-list.html';
+                else{
+                    alert('Incorrect Role');
+                    form.reset();
+                    window.location.href = 'cap.html';
+                }
+                
             } else {
                 const errorData = await response.json();
                 alert(`Registration failed: ${errorData.message || 'Unknown error'}`);

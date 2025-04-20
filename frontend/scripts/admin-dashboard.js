@@ -45,6 +45,14 @@ function setupEventListeners() {
             });
         });
     });
+
+    window.addEventListener('click', event => {
+        const modal = document.getElementById('order-details-modal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
 }
 
 async function loadDashboardData() {
@@ -212,6 +220,44 @@ async function loadProducts() {
         showToast('Failed to load products', 'error');
     }
 }
+
+async function viewOrderDetails(orderId) {
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/admin/orders/${orderId}`, {
+            credentials: 'include'
+        });
+        const order = await response.json();
+
+        const modal = document.getElementById('order-details-modal');
+        const modalBody = document.getElementById('order-details-body');
+
+        // Construct order details HTML
+        modalBody.innerHTML = `
+            <p><strong>Order ID:</strong> #${order._id.slice(-6)}</p>
+            <p><strong>Customer:</strong> ${order.customer.firstName} ${order.customer.lastName}</p>
+            <p><strong>Email:</strong> ${order.customer.email}</p>
+            <p><strong>Status:</strong> ${order.status}</p>
+            <p><strong>Date:</strong> ${new Date(order.date).toLocaleString()}</p>
+            <h3>Items:</h3>
+            <ul>
+                ${order.items.map(item => `
+                    <li>${item.product.name} - Qty: ${item.quantity} - ₹${item.product.price.toFixed(2)}</li>
+                `).join('')}
+            </ul>
+            <p><strong>Total:</strong> ₹${order.total.toFixed(2)}</p>
+        `;
+
+        modal.style.display = 'block';
+    } catch (error) {
+        console.error('Failed to fetch order details:', error);
+        showToast('Failed to load order details', 'error');
+    }
+}
+
+function closeOrderDetailsModal() {
+    document.getElementById('order-details-modal').style.display = 'none';
+}
+
 
 async function loadOrders() {
     const statusFilter = document.getElementById('order-status-filter').value;
