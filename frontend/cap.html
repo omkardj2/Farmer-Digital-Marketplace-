@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="stylesheets/cap.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2 id="caName">Create Account</h2>
+            <form id="signup-form">
+                <div class="input-group">
+                    <input type="text" id="firstName" placeholder="First name" required>
+                    <input type="text" id="lastName" placeholder="Last name" required>
+                </div>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Set Password" required minlength="8">
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required minlength="8">
+                <select id="role" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="farmer">Farmer</option>
+                    <option value="customer">Customer</option>
+                    <option value="delivery">Delivery Person</option>
+                </select>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="terms" required>
+                    I agree with Terms & Conditions
+                </label>
+                <button type="submit">Continue</button>
+            </form>
+            <p>Already have an account? <a href="lp.html" id="goToLogin">Login</a></p>
+            <div class="or-divider">
+                <hr><span>OR</span><hr>
+            </div>
+            <button class="googleLogin">
+                <i class="fa-brands fa-google" style="color: #ffffff; margin-right: 10px;"></i>
+                Continue with Google
+            </button>
+        </div>
+    </div>
+    <script src="./scripts/cap.js"></script>
+</body>
+</html>

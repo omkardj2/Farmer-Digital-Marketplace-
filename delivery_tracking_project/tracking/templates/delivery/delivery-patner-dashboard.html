@@ -1,0 +1,43 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Partner Dashboard</title>
+    <link rel="stylesheet" href="{% static './stylesheets/delivery-patner-dashboard.css' %}">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="{%static 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.css'%}">
+    
+    <!-- Leaflet JavaScript -->
+    <script src="{%static 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Delivery Partner Dashboard</h1>
+
+        <div class="delivery-list">
+            <h2>Active Deliveries</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="deliveryTable">
+                    <!-- Data will be inserted dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Route Tracking</h2>
+        <div id="map"></div>
+    </div>
+
+    <script src="{% static './scripts/delivery-patner-dashboard.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "farmer-marketplace-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Farmer Digital Marketplace",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server --port=8080",
+    "dev": "live-server --port=8080"
+  },
+  "dependencies": {
+    "leaflet": "^1.7.1"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+} 

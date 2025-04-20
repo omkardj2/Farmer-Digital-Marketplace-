@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="./stylesheets/user-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="./images/logo.png" alt="GreenBasket Logo" class="logo-img">
+                <span class="logo-text">GreenBasket</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#orders" class="nav-item" data-section="orders">
+                    <i class="fas fa-shopping-bag"></i> My Orders
+                </a>
+                <a href="./delivery-tracking.html" class="nav-item">
+                    <i class="fas fa-truck"></i> Track Delivery
+                </a>
+                <a href="#cart" class="nav-item" data-section="cart">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                </a>
+                <a href="#wishlist" class="nav-item" data-section="wishlist">
+                    <i class="fas fa-heart"></i> Wishlist
+                </a>
+                <a href="#profile" class="nav-item" data-section="profile">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <a href="#" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search orders...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-profile">
+                    <span id="user-name">User</span>
+                    <img src="./images/profilepic.jpg" alt="Profile" id="user-avatar">
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section">
+                <h2>Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-shopping-bag"></i>
+                        <div class="stat-info">
+                            <h3>Total Orders</h3>
+                            <p id="total-orders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-heart"></i>
+                        <div class="stat-info">
+                            <h3>Wishlist Items</h3>
+                            <p id="wishlist-count">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div class="stat-info">
+                            <h3>Cart Items</h3>
+                            <p id="cart-count">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-rupee-sign"></i>
+                        <div class="stat-info">
+                            <h3>Total Spent</h3>
+                            <p id="total-spent">₹0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-orders">
+                    <h3>Recent Orders</h3>
+                    <div class="table-container">
+                        <table id="recent-orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Items</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Recent orders will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders" class="content-section">
+                <h2>My Orders</h2>
+                <div class="table-container">
+                    <table id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Orders will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Cart Section -->
+            <section id="cart" class="content-section">
+                <h2>My Cart</h2>
+                <div id="cart-items" class="cart-grid">
+                    <!-- Cart items will be dynamically loaded here -->
+                </div>
+                <div class="cart-summary">
+                    <h3>Cart Summary</h3>
+                    <p>Subtotal: <span id="cart-subtotal">₹0.00</span></p>
+                    <button id="checkout-btn" class="checkout-btn">Proceed to Checkout</button>
+                </div>
+            </section>
+
+            <!-- Wishlist Section -->
+            <section id="wishlist" class="content-section">
+                <h2>My Wishlist</h2>
+                <div class="wishlist-grid" id="wishlist-items">
+                    <!-- Wishlist items will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="content-section">
+                <h2>Profile Management</h2>
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <img src="./images/profilepic.jpg" alt="Profile" id="profile-image">
+                            <button class="change-avatar-btn">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profile-name">User Name</h3>
+                            <p id="profile-email">user@email.com</p>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <form id="edit-profile-form">
+                            <div class="form-group">
+                                <label for="edit-firstname">First Name</label>
+                                <input type="text" id="edit-firstname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-lastname">Last Name</label>
+                                <input type="text" id="edit-lastname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-email">Email</label>
+                                <input type="email" id="edit-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-phone">Phone</label>
+                                <input type="tel" id="edit-phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-address">Address</label>
+                                <textarea id="edit-address" required></textarea>
+                            </div>
+                            <button type="submit" class="save-profile-btn">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="./scripts/auth-check.js"></script>
+    <script src="./scripts/user-dashboard.js"></script>
+</body>
+</html>

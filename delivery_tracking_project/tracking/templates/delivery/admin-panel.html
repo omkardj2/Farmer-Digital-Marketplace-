@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{% static './stylesheets/admin-panel.css'%}">
+    
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Panel</h1>
+
+        <div class="dashboard">
+            <div class="card">
+                <h3>Total Deliveries</h3>
+                <p id="totalDeliveries">0</p>
+            </div>
+            <div class="card">
+                <h3>Active Deliveries</h3>
+                <p id="activeDeliveries">0</p>
+            </div>
+            <div class="card">
+                <h3>Completed Deliveries</h3>
+                <p id="completedDeliveries">0</p>
+            </div>
+        </div>
+
+        <h2>Manage Deliveries</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="adminTable">
+                <!-- Data will be inserted dynamically -->
+            </tbody>
+        </table>
+
+        <h2>Real-Time Location Tracking</h2>
+        <div id="map"></div>
+    </div>
+
+    <script src="{% static 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.js' %}"></script>
+</body>
+</html>
+

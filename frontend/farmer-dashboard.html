@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Dashboard</title>
+    <link rel="stylesheet" href="./stylesheets/farmer-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="./images/logo.png" alt="GreenBasket Logo" class="logo-img">
+                <span class="logo-text">GreenBasket</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#products" class="nav-item" data-section="products">
+                    <i class="fas fa-box"></i> My Products
+                </a>
+                <a href="#orders" class="nav-item" data-section="orders">
+                    <i class="fas fa-shopping-cart"></i> Orders
+                </a>
+                <a href="#profile" class="nav-item" data-section="profile">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <a href="#" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search products...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="farmer-profile">
+                    <span id="farmer-name">Farmer</span>
+                    <img src="./images/profilepic.jpg" alt="Profile" id="farmer-avatar">
+                </div>
+            </header>
+
+            <!-- Dashboard Overview Section -->
+            <section id="dashboard" class="content-section active">
+                <h2>Dashboard Overview</h2>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-box"></i>
+                        <div class="stat-info">
+                            <h3>Total Products</h3>
+                            <p class="stat-value" id="total-products">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div class="stat-info">
+                            <h3>Active Orders</h3>
+                            <p class="stat-value" id="active-orders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-rupee-sign"></i>
+                        <div class="stat-info">
+                            <h3>Total Revenue</h3>
+                            <p class="stat-value" id="total-revenue">₹0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="stat-info">
+                            <h3>This Month</h3>
+                            <p class="stat-value" id="monthly-revenue">₹0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Sales Overview</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="sales-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Top Products</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="products-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products" class="content-section">
+                <h2>My Products</h2>
+                <div class="table-actions">
+                    <button class="add-btn" id="add-product-btn">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                    <div class="filter-group">
+                        <select id="product-category-filter">
+                            <option value="">All Categories</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="grains">Grains</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="products-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Products will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders" class="content-section">
+                <h2>Orders Management</h2>
+                <div class="table-actions">
+                    <div class="filter-group">
+                        <select id="order-status-filter">
+                            <option value="">All Orders</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Products</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Orders will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="content-section">
+                <h2>Profile Management</h2>
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <img src="./images/profilepic.jpg" alt="Profile" id="profile-image">
+                            <button class="change-avatar-btn">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profile-name">Farmer Name</h3>
+                            <p id="profile-email">farmer@email.com</p>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <form id="edit-profile-form">
+                            <div class="form-group">
+                                <label for="edit-firstname">First Name</label>
+                                <input type="text" id="edit-firstname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-lastname">Last Name</label>
+                                <input type="text" id="edit-lastname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-email">Email</label>
+                                <input type="email" id="edit-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-contact">Contact</label>
+                                <input type="text" id="edit-contact" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-location">Location</label>
+                                <input type="text" id="edit-location" required>
+                            </div>
+                            <button type="submit" class="save-profile-btn">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="add-product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Add New Product</h2>
+            <form id="add-product-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="product-name">Product Name *</label>
+                    <input type="text" id="product-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-category">Category *</label>
+                    <select id="product-category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Vegetables">Vegetables</option>
+                        <option value="Fruits">Fruits</option>
+                        <option value="Grains">Grains</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Description *</label>
+                    <textarea id="product-description" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Price (₹) *</label>
+                    <input type="number" id="product-price" name="price" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-quantity">Quantity *</label>
+                    <input type="number" id="product-quantity" name="quantity" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-image">Product Image *</label>
+                    <input type="file" id="product-image" name="image" accept="image/*" required>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-plus"></i> Add Product
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./scripts/auth-check.js"></script>
+    <script src="./scripts/farmer-dashboard.js"></script>
+</body>
+</html>

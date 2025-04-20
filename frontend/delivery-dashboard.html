@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Dashboard - GreenBasket</title>
+    <link rel="stylesheet" href="./stylesheets/delivery-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="./images/logo.png" alt="GreenBasket Logo" class="logo-img">
+                <span class="logo-text">GreenBasket</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#active-deliveries" class="nav-item active" data-section="active-deliveries">
+                    <i class="fas fa-truck"></i> Active Deliveries
+                </a>
+                <a href="#delivery-history" class="nav-item" data-section="delivery-history">
+                    <i class="fas fa-history"></i> Delivery History
+                </a>
+                <a href="#profile" class="nav-item" data-section="profile">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <a href="#" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search deliveries...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="delivery-profile">
+                    <span id="delivery-name">Delivery Partner</span>
+                    <img src="./images/profilepic.jpg" alt="Profile" id="delivery-avatar">
+                </div>
+            </header>
+
+            <section id="active-deliveries" class="content-section active">
+                <h2>Active Deliveries</h2>
+                <div class="delivery-map-container">
+                    <div id="delivery-map"></div>
+                    <div class="delivery-list">
+                        <h3>Today's Deliveries</h3>
+                        <div class="delivery-cards" id="active-deliveries-list">
+                            <!-- Delivery cards will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="delivery-history" class="content-section">
+                <h2>Delivery History</h2>
+                <div class="table-container">
+                    <table id="delivery-history-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Address</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Delivery history will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="profile" class="content-section">
+                <h2>Profile Management</h2>
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <img src="./images/profilepic.jpg" alt="Profile" id="profile-image">
+                            <button class="change-avatar-btn">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profile-name">Delivery Partner Name</h3>
+                            <p id="profile-email">delivery@email.com</p>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <form id="edit-profile-form">
+                            <div class="form-group">
+                                <label for="edit-name">Full Name</label>
+                                <input type="text" id="edit-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-email">Email</label>
+                                <input type="email" id="edit-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-phone">Phone</label>
+                                <input type="tel" id="edit-phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-vehicle">Vehicle Type</label>
+                                <select id="edit-vehicle" required>
+                                    <option value="bike">Bike</option>
+                                    <option value="scooter">Scooter</option>
+                                    <option value="car">Car</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="save-profile-btn">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Delivery Confirmation Modal -->
+    <div id="delivery-confirmation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Confirm Delivery</h2>
+            <div class="delivery-details">
+                <p><strong>Order ID:</strong> <span id="modal-order-id"></span></p>
+                <p><strong>Customer:</strong> <span id="modal-customer-name"></span></p>
+                <p><strong>Address:</strong> <span id="modal-delivery-address"></span></p>
+            </div>
+            <div class="otp-verification">
+                <p>Please enter the OTP received by the customer:</p>
+                <input type="text" id="delivery-otp" placeholder="Enter OTP" maxlength="6">
+                <button id="confirm-delivery-btn">Confirm Delivery</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="./scripts/delivery-dashboard.js"></script>
+</body>
+</html> 

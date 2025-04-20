@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - GreenBasket</title>
+    <link rel="stylesheet" href="./stylesheets/pdp.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="./images/logo.png" alt="GreenBasket Logo" class="logo-img">
+            <span class="logo-text">GreenBasket</span>
+        </div>
+        <nav>
+            <a href="product-list.html"><i class="fa-solid fa-arrow-left"></i> Back to Products</a>
+            <a href="#" id="cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="product-container">
+            <div class="product-image">
+                <div id="image-loading" class="loading-spinner"></div>
+                <img id="product-img" src="" alt="Product Image" onerror="this.src='./images/default-product.jpg'">
+            </div>
+            <div class="product-details">
+                <h1 id="product-name"></h1>
+                <p class="price">₹<span id="product-price"></span></p>
+                <p id="product-description"></p>
+                <div class="farmer-info">
+                    <p>Sold by: <span id="farmer-name"></span></p>
+                    <p>Location: <span id="farmer-location"></span></p>
+                </div>
+                <div class="quantity-selector">
+                    <label for="quantity">Quantity:</label>
+                    <select id="quantity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <button id="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 GreenBasket | Privacy | Terms | Sitemap</p>
+    </footer>
+
+    <script src="./scripts/pdp.js"></script>
+</body>
+</html>

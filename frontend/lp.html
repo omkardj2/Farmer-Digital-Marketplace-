@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+    <link rel="stylesheet" href="stylesheets/lp.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required minlength="8">
+                <select id="role" required>
+                    <option value="" disabled selected>User Type</option>
+                    <option value="admin">Admin</option>
+                    <option value="farmer">Farmer</option>
+                    <option value="customer">Customer</option>
+                    <option value="delivery">Delivery Person</option>
+                </select>
+                <button id="login" type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="cap.html">Register</a></p>
+            <div class="or-divider">
+                <hr><span>OR</span><hr>
+            </div>
+            <button class="googleLogin">
+                <i class="fa-brands fa-google" style="color: #ffffff; margin-right: 10px;"></i>
+                Continue with Google
+            </button>
+        </div>
+    </div>
+    <script src="./scripts/lp.js"></script>
+</body>
+</html>

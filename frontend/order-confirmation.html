@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation - GreenBasket</title>
+  <link rel="stylesheet" href="./stylesheets/common.css">
+  <link rel="stylesheet" href="./stylesheets/order-confirmation.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="confirmation-main">
+    <div class="confirmation-container">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h1>Thank You for Your Order!</h1>
+      <p>Your order has been successfully placed.</p>
+      
+      <div class="order-details">
+        <h2>Order Details</h2>
+        <p class="order-id">Order ID: <span id="orderId"></span></p>
+        <div class="order-summary" id="orderSummary">
+          <!-- Order items will be loaded here -->
+        </div>
+      </div>
+
+      <div class="tracking-info">
+        <h2>Track Your Order</h2>
+        <p>Your order is being processed and will be delivered soon.</p>
+        <a href="./delivery-tracking.html?orderId=" class="track-button" id="trackOrderBtn">
+          <i class="fas fa-truck"></i> Track Delivery
+        </a>
+      </div>
+
+      <div class="next-steps">
+        <a href="product-list.html" class="button">
+          <i class="fas fa-shopping-basket"></i> Continue Shopping
+        </a>
+        <a href="user-dashboard.html#orders" class="button secondary">
+          <i class="fas fa-list"></i> View All Orders
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script src="./scripts/common.js"></script>
+  <script src="./scripts/order-confirmation.js"></script>
+</body>
+</html>

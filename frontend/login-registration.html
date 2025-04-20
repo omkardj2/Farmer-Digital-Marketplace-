@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication</title>
+    <link rel="stylesheet" href="./stylesheets/login-registration.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <div class="form-container" id="loginForm">
+            <h2>Login</h2>
+            <form id="login-actual">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <select id="loginRole" required>  <option value="">Select your role</option>
+                    <option value="farmer">Farmer</option>
+                    <option value="customer">Customer</option>
+                    <option value="middleman">Middleman</option>
+                </select>
+                <button type="submit">Login</button>
+                <p>Don't have an account? <span id="goToSignup">Register</span></p>
+            </form>
+        </div>
+
+        <div class="form-container" id="signupForm" style="display: none;">
+            <h2>Create Account</h2>
+            <form id="signup-actual">
+                <div class="name-inputs">
+                    <input type="text" id="firstName" placeholder="First name" required>
+                    <input type="text" id="lastName" placeholder="Last name" required>
+                </div>
+                <input type="email" id="signupEmail" placeholder="Email" required>
+                <input type="password" id="signupPassword" placeholder="Set Password (min. 8 characters)" required minlength="8">
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+
+                <select id="role" required>
+                    <option value="">Select your role</option>
+                    <option value="farmer">Farmer</option>
+                    <option value="customer">Customer</option>
+                    <option value="middleman">Middleman</option>
+                </select>
+
+                <label for="terms">
+                    <input type="checkbox" id="terms" required>
+                    I agree with Terms & Conditions
+                </label>
+
+                <button type="submit">Continue</button>
+                <p>Already have an account? <span id="goToLogin">Login</span></p>
+            </form>
+        </div>
+    </div>
+    <script src="./scripts/login-registration.js"></script>
+</body>
+</html>

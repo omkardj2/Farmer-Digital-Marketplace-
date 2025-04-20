@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Tracking</title>
+
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="{% static 'stylesheets/delivery-trackMap-page.css' %}">
+
+    <!-- Leaflet CDN CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+    <!-- Optional: Map container styling -->
+    <style>
+        #map { height: 500px; width: 100%; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delivery Tracking</h1>
+        
+        <div class="status-info">
+            <p><strong>Order ID:</strong> <span id="orderID">ORD1234</span></p>
+            <p><strong>Status:</strong> <span id="status">On the way</span></p>
+        </div>
+
+        <!-- Map container -->
+        <div id="map"></div>
+
+        <button id="goBack">Back to Dashboard</button>
+    </div>
+
+    <!-- Map JS logic -->
+    <script>
+        // Data from Django context
+        const deliveryData = JSON.parse('{{ delivery_data|safe }}');
+
+        const map = L.map('map').setView([18.5204, 73.8567], 12);  // Center on Pune (example)
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Adding markers to the map for each delivery
+        deliveryData.forEach(function(delivery) {
+            L.marker([delivery.lat, delivery.lng])
+                .addTo(map)
+                .bindPopup(`
+                    <b>Delivery ID:</b> ${delivery.id}<br>
+                    <b>Status:</b> ${delivery.status}
+                `);
+        });
+        
+        // Back button function to return to the dashboard
+        document.getElementById('goBack').addEventListener('click', function() {
+            window.location.href = '/delivery/dashboard/';
+        });
+    </script>
+
+    <!-- Optional: Your own JS enhancements -->
+    <script src="{% static 'scripts/delivery-trackMap-page.js' %}"></script>
+</body>
+</html>
