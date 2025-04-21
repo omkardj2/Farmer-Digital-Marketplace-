@@ -3,50 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Track Your Order - GreenBasket</title>
-    <link rel="stylesheet" href="./stylesheets/common.css">
-    <link rel="stylesheet" href="./stylesheets/delivery-tracking.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Delivery Tracking</title>
+    <link rel="stylesheet" href="stylesheets/delivery-tracking.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
 </head>
 <body>
-    <!-- Header will be loaded here -->
-    <div id="header-placeholder"></div>
-
-    <main class="tracking-main">
-        <div class="tracking-container">
-            <div class="tracking-header">
-                <h1>Track Your Order</h1>
-                <p>Enter your order ID to track your delivery</p>
+    <div class="container">
+        <header>
+            <h1>Delivery Tracking</h1>
+            <div class="user-info">
+                <span id="delivery-person-name"></span>
+                <button id="logout-btn">Logout</button>
             </div>
+        </header>
 
-            <div class="tracking-search">
-                <input type="text" id="orderIdInput" placeholder="Enter Order ID (e.g., ORD001)">
-                <button onclick="trackOrder()">Track Order</button>
-            </div>
-
-            <div id="tracking-result" class="tracking-result">
-                <!-- Results will be shown here -->
-            </div>
-
-            <div id="map-container" style="display: none;">
-                <div class="delivery-info-panel">
-                    <!-- Delivery info will be shown here -->
+        <main>
+            <div class="tracking-container">
+                <div class="map-container">
+                    <div id="map"></div>
                 </div>
-                <div id="delivery-map"></div>
+                
+                <div class="delivery-info">
+                    <h2>Active Deliveries</h2>
+                    <div id="active-deliveries">
+                        <!-- Delivery items will be dynamically added here -->
+                    </div>
+                </div>
             </div>
-        </div>
+        </main>
+    </div>
 
-        <div class="recent-orders">
-            <h2>Your Recent Orders</h2>
-            <div class="orders-grid" id="recent-orders-container">
-                <!-- Recent orders will be loaded here -->
-            </div>
-        </div>
-    </main>
-
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="./scripts/common.js"></script>
-    <script src="./scripts/delivery-tracking.js"></script>
+    <input type="hidden" id="delivery-person-id" value="">
+    <script src="scripts/delivery-tracking.js"></script>
 </body>
 </html> 

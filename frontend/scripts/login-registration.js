@@ -15,7 +15,7 @@ goToLogin.addEventListener('click', () => {
 
 // Signup Form Submission
 document.getElementById('signup-actual').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     // 1. Get form values
     const firstName = document.getElementById('firstName').value;
@@ -37,7 +37,6 @@ document.getElementById('signup-actual').addEventListener('submit', async functi
         return;
     }
 
-    // Basic email validation (you might want a more robust regex)
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(signupEmail)) {
         alert("Invalid email format!");
         return;
@@ -50,15 +49,17 @@ document.getElementById('signup-actual').addEventListener('submit', async functi
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ firstName, lastName, email: signupEmail, password: signupPassword, contact: '', role })
+            body: JSON.stringify({ firstName, lastName, email: signupEmail, password: signupPassword, role })
         });
 
         const data = await response.json();
         if (response.ok) {
-            alert('Registration successful!');
-            // Optionally, redirect to login page or dashboard
+            alert('Registration successful! Please login with your credentials.');
+            // Switch to login form after successful registration
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'block';
         } else {
-            alert(`Registration failed: ${data.message}`);
+            alert(`Registration failed: ${data.error || 'Unknown error'}`);
         }
     } catch (error) {
         console.error('Error:', error);
@@ -74,37 +75,59 @@ document.getElementById('login-actual').addEventListener('submit', async functio
     const loginPassword = document.getElementById('loginPassword').value;
     const loginRole = document.getElementById('loginRole').value;
 
-    // 1. Get Values
     if (!loginEmail || !loginPassword || !loginRole) {
         alert("All fields are required!");
         return;
     }
 
-    // 2. Validation (Add more validation if needed)
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginEmail)) {
         alert("Invalid email format!");
         return;
     }
 
-    // 3. Send data to backend
     try {
         const response = await fetch('http://localhost:3000/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email: loginEmail, password: loginPassword, role: loginRole })
+            body: JSON.stringify({
+                email: loginEmail,
+                password: loginPassword,
+                role: loginRole
+            }),
+            credentials: 'include'
         });
 
         const data = await response.json();
+
         if (response.ok) {
-            alert('Login successful!');
-            // Optionally, redirect to dashboard
+            // Store user role in localStorage for future reference
+            localStorage.setItem('userRole', data.role);
+            localStorage.setItem('userId', data.userId);
+
+            // Redirect based on role
+            switch(loginRole.toLowerCase()) {
+                case 'admin':
+                    window.location.href = 'admin-dashboard.html';
+                    break;
+                case 'farmer':
+                    window.location.href = 'farmer-dashboard.html';
+                    break;
+                case 'delivery':
+                    window.location.href = 'delivery-dashboard.html';
+                    break;
+                case 'customer':
+                    window.location.href = 'user-dashboard.html';
+                    break;
+                default:
+                    window.location.href = '/dashboard.html';
+            }
         } else {
-            alert(`Login failed: ${data.message}`);
+            alert(`Login failed: ${data.error || 'Invalid credentials'}`);
         }
     } catch (error) {
         console.error('Error:', error);
-        alert(error);
+        alert('An error occurred during login.');
     }
 });

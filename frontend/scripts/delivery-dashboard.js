@@ -2,16 +2,63 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeMap();
     loadActiveDeliveries();
     setupEventListeners();
+    startLocationTracking();
 });
 
 let map;
 let markers = [];
+let userMarker;
+let watchId;
 
 function initializeMap() {
     map = L.map('delivery-map').setView([20.5937, 78.9629], 5); // Default to India
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
+
+    // Add user location marker
+    userMarker = L.marker([0, 0], {
+        icon: L.divIcon({
+            className: 'delivery-person-marker',
+            html: '<i class="fas fa-motorcycle"></i>',
+            iconSize: [30, 30]
+        })
+    });
+}
+
+function startLocationTracking() {
+    if ("geolocation" in navigator) {
+        watchId = navigator.geolocation.watchPosition(
+            async position => {
+                const { latitude, longitude } = position.coords;
+                
+                // Update marker on map
+                userMarker.setLatLng([latitude, longitude]).addTo(map);
+                
+                // Send location to server
+                try {
+                    await fetch('http://127.0.0.1:3000/delivery/update-location', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ latitude, longitude }),
+                        credentials: 'include'
+                    });
+                } catch (error) {
+                    console.error('Error updating location:', error);
+                }
+            },
+            error => {
+                console.error('Error getting location:', error);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            }
+        );
+    }
 }
 
 async function loadActiveDeliveries() {
@@ -142,6 +189,9 @@ function setupEventListeners() {
 
     // Handle logout
     document.querySelector('.logout').addEventListener('click', async () => {
+        if (watchId) {
+            navigator.geolocation.clearWatch(watchId);
+        }
         try {
             const response = await fetch('http://127.0.0.1:3000/auth/logout', {
                 method: 'POST',
@@ -155,6 +205,9 @@ function setupEventListeners() {
             console.error('Logout failed:', error);
         }
     });
+
+    // Load delivery history when switching to history tab
+    document.querySelector('[data-section="delivery-history"]').addEventListener('click', loadDeliveryHistory);
 }
 
 function showSection(sectionId) {
@@ -171,4 +224,30 @@ function showSection(sectionId) {
     // Show selected section and activate nav item
     document.getElementById(sectionId).classList.add('active');
     document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+}
+
+async function loadDeliveryHistory() {
+    try {
+        const response = await fetch('http://127.0.0.1:3000/delivery/history', {
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to load delivery history');
+        }
+
+        const history = await response.json();
+        const tbody = document.querySelector('#delivery-history-table tbody');
+        tbody.innerHTML = history.map(delivery => `
+            <tr>
+                <td>${delivery.order_id}</td>
+                <td>${delivery.customer_name}</td>
+                <td>${delivery.delivery_address}</td>
+                <td><span class="status-badge ${delivery.status}">${delivery.status}</span></td>
+                <td>${new Date(delivery.delivery_date).toLocaleDateString()}</td>
+            </tr>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading delivery history:', error);
+    }
 } 

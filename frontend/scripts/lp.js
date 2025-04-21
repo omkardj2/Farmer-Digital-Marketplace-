@@ -34,6 +34,7 @@ async function handleLogin(event) {
     if (errorDiv) errorDiv.textContent = '';
 
     try {
+        console.log('Attempting login...');
         // Login request
         const loginResponse = await fetch('http://127.0.0.1:3000/auth/login', {
             method: 'POST',
@@ -48,24 +49,30 @@ async function handleLogin(event) {
             })
         });
 
+        console.log('Login response status:', loginResponse.status);
         const loginData = await loginResponse.json();
+        console.log('Login response data:', loginData);
 
         if (!loginResponse.ok) {
             throw new Error(loginData.message || 'Login failed');
         }
 
         // Verify token was set by checking auth status
+        console.log('Verifying authentication...');
         const verifyResponse = await fetch('http://127.0.0.1:3000/auth/verify', {
             credentials: 'include'
         });
 
+        console.log('Verify response status:', verifyResponse.status);
         const verifyData = await verifyResponse.json();
+        console.log('Verify response data:', verifyData);
 
         if (!verifyResponse.ok) {
             throw new Error('Authentication failed');
         }
 
         // Redirect based on role
+        console.log('Redirecting based on role:', loginData.role);
         switch(loginData.role) {
             case 'admin':
                 window.location.href = 'admin-dashboard.html';

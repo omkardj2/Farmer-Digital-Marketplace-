@@ -1,90 +1,95 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const Farmer = require('../../models/farmerModel');
+const Customer = require('../../models/customerModel');
+const DeliveryPerson = require('../../models/deliveryPersonModel');
+const { generateToken } = require('../../utils/generateToken');
 
-const mongoose_connection = require('../../config/mongoose-connection')
-const customerModel = require("../../models/customerModel");
-const farmerModel = require("../../models/farmerModel");
-const deliveryPersonModel = require("../../models/deliveryPersonModel");
-
-const cookieParser = require('cookie-parser');
-const generateToken = require('../../utils/generateToken')
-
-async function register(req , res){
-    let{firstName , lastName , email , password , contact , role , vehicleNumber , vehicleType} = req.body;
-    if(!firstName || !lastName || !email || !password || !role){
-        return res.status(400).json({message: "All fields are required"});
-    }
-    
+const register = async (req, res) => {
     try {
-        let existing;
-        let userModel;
-        let userData = {
+        const { firstName, lastName, email, password, role, phone, vehicleNumber, vehicleType } = req.body;
+
+        // Basic validation
+        if (!firstName || !lastName || !email || !password || !role || !phone) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        // Select appropriate model based on role
+        let UserModel;
+        switch (role.toLowerCase()) {
+            case 'farmer':
+                UserModel = Farmer;
+                break;
+            case 'customer':
+                UserModel = Customer;
+                break;
+            case 'delivery':
+                UserModel = DeliveryPerson;
+                if (!vehicleNumber || !vehicleType) {
+                    return res.status(400).json({ error: 'Vehicle details are required for delivery role' });
+                }
+                break;
+            default:
+                return res.status(400).json({ error: 'Invalid role' });
+        }
+
+        // Check if user already exists
+        const existingUser = await UserModel.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'User already exists' });
+        }
+
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Create new user
+        const userData = {
             firstName,
             lastName,
             email,
-            password,
-            contact,
-            profilepic: '../../uploads/profiles/avatar.png'
+            password: hashedPassword,
+            role,
+            phone
         };
 
-        if(role == "farmer"){
-            existing = await farmerModel.findOne({email});
-            userModel = farmerModel;
-        }else if(role == "delivery"){
-            existing = await deliveryPersonModel.findOne({email});
-            userModel = deliveryPersonModel;
+        // Add vehicle details for delivery role
+        if (role.toLowerCase() === 'delivery') {
             userData.vehicleNumber = vehicleNumber;
             userData.vehicleType = vehicleType;
-        }else{
-            existing = await customerModel.findOne({email});
-            userModel = customerModel;
         }
 
-        if(existing) return res.status(400).json({message:"user already exists"});
+        const user = new UserModel(userData);
 
-        bcrypt.genSalt(10 , function( err , salt ){
-            bcrypt.hash(password , salt , async function(err , hash){
-                try {
-                    userData.password = hash;
-                    const user = await userModel.create(userData);
-                    
-                    const token = generateToken(user, role);
-                    
-                    res.cookie("authToken", token, {
-                        httpOnly: true,
-                        secure: process.env.NODE_ENV === 'production',
-                        sameSite: 'Lax',
-                        path: '/',
-                        maxAge: 24 * 60 * 60 * 1000
-                    });
+        // Save user
+        await user.save();
 
-                    return res.status(201).json({
-                        success: true,
-                        message: "Registration successful",
-                        user: {
-                            id: user._id,
-                            email: user.email,
-                            firstName: user.firstName,
-                            lastName: user.lastName,
-                            role: role
-                        }
-                    });
-                } catch (err) {
-                    return res.status(500).json({ 
-                        success: false,
-                        message: "Server Error", 
-                        error: err.message 
-                    });
-                }
-            })
-        })
-    } catch (err) {
-        return res.status(500).json({ 
-            success: false,
-            message: "Server Error", 
-            error: err.message 
+        // Generate token
+        const token = generateToken(user);
+
+        // Set cookie
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 24 * 60 * 60 * 1000 // 24 hours
         });
-    }
-}
 
-module.exports = register;
+        // Return success response
+        res.status(201).json({
+            success: true,
+            user: {
+                id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                role: user.role
+            }
+        });
+    } catch (error) {
+        console.error('Registration error:', error);
+        res.status(500).json({ error: 'Registration failed' });
+    }
+};
+
+module.exports = {
+    register
+};

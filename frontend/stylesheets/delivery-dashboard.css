@@ -115,9 +115,10 @@
 
 .delivery-map-container {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr 300px;
+    gap: 1rem;
     height: calc(100vh - 200px);
+    margin-top: 1rem;
 }
 
 #delivery-map {
@@ -128,7 +129,7 @@
 
 .delivery-list {
     background: white;
-    padding: 20px;
+    padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     overflow-y: auto;
@@ -143,34 +144,39 @@
 
 .delivery-card {
     background: #f8f9fa;
-    padding: 15px;
+    padding: 1rem;
     border-radius: 6px;
-    border-left: 4px solid #2c7b4f;
+    margin-bottom: 1rem;
+}
+
+.delivery-card:last-child {
+    margin-bottom: 0;
 }
 
 .delivery-card h4 {
-    margin-bottom: 10px;
-    color: #2c7b4f;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
 }
 
 .delivery-card p {
-    margin: 5px 0;
-    font-size: 14px;
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
 }
 
 .delivery-card button {
-    margin-top: 10px;
-    padding: 8px 15px;
-    background: #2c7b4f;
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    background: #4CAF50;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
+    transition: background-color 0.3s ease;
 }
 
 .delivery-card button:hover {
-    background: #1e5a3d;
+    background: #45a049;
 }
 
 /* Modal Styles */
@@ -326,4 +332,55 @@ tr:hover {
 
 .save-profile-btn:hover {
     background: #1e5a3d;
+}
+
+/* Delivery Person Marker */
+.delivery-person-marker {
+    background: none;
+    border: none;
+}
+
+.delivery-person-marker i {
+    font-size: 24px;
+    color: #4CAF50;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-badge.pending {
+    background-color: #ffeeba;
+    color: #856404;
+}
+
+.status-badge.in-transit {
+    background-color: #b8daff;
+    color: #004085;
+}
+
+.status-badge.delivered {
+    background-color: #c3e6cb;
+    color: #155724;
+}
+
+/* Responsive Design for Map */
+@media (max-width: 768px) {
+    .delivery-map-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    #delivery-map {
+        height: 300px;
+    }
+
+    .delivery-list {
+        max-height: 400px;
+    }
 } 

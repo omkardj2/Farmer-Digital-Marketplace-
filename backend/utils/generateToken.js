@@ -1,19 +1,27 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-function generateToken(user, role) {
-    if (!process.env.JWT_KEY) {
-        throw new Error('JWT_KEY is not configured');
-    }
+const JWT_KEY = process.env.JWT_KEY || 'your-secret-key';
 
-    return jwt.sign(
-        {
+const generateToken = (user) => {
+    try {
+        if (!JWT_KEY) {
+            throw new Error('JWT_KEY is not configured');
+        }
+
+        const payload = {
             id: user._id,
             email: user.email,
-            role: role // Use the explicit role passed from login
-        },
-        process.env.JWT_KEY,
-        { expiresIn: '24h' }
-    );
-}
+            role: user.role
+        };
 
-module.exports = generateToken;
+        return jwt.sign(payload, JWT_KEY, {
+            expiresIn: '24h'
+        });
+    } catch (error) {
+        console.error('Token generation error:', error);
+        throw error;
+    }
+};
+
+module.exports = { generateToken };
