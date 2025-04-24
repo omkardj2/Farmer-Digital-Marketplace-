@@ -48,6 +48,7 @@ function displayProducts(products) {
     }
 
     products.forEach(product => {
+        console.log(product);
         const productCard = `
             <div class="product-card">
                 <div class="product-image">
@@ -57,7 +58,7 @@ function displayProducts(products) {
                 </div>
                 <div class="product-info">
                     <h3>${product.name}</h3>
-                    <p class="description">${product.description}</p>
+                    
                     <p class="price">₹${product.price}</p>
                     <div class="product-actions">
                         <button class="quick-view" onclick="quickView('${product._id}')">Quick View</button>
@@ -99,10 +100,34 @@ function addToCart(productId) {
     })
     .then(response => response.json())
     .then(data => {
-        alert('Product added to cart!');
+        showToast('Product added to cart!', 'success');
     })
     .catch(err => {
         console.error('Error adding to cart:', err);
-        alert('Failed to add product to cart. Please try again.');
+        showToast('Failed to add product to cart. Please try again.', 'error');
     });
+}
+
+function showToast(message, type = 'info') {
+    const toastContainer = document.getElementById('toast-container') || createToastContainer();
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000); // Toast disappears after 3 seconds
+}
+
+function createToastContainer() {
+    const container = document.createElement('div');
+    container.id = 'toast-container';
+    container.style.position = 'fixed';
+    container.style.bottom = '20px';
+    container.style.right = '20px';
+    container.style.zIndex = '1000';
+    document.body.appendChild(container);
+    return container;
 }

@@ -1,86 +1,197 @@
+/* General Styles */
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f8f9fa;
+    background-color: #f4f4f9;
     margin: 0;
     padding: 0;
-  }
-  
-  .confirmation-container {
-    max-width: 600px;
+    color: #333;
+}
+
+/* Confirmation Container */
+.confirmation-container {
+    max-width: 700px;
     margin: 50px auto;
     background: #fff;
     padding: 40px;
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
-  }
-  
-  .icon {
-    font-size: 60px;
+    overflow: hidden;
+}
+
+/* Header Icon */
+.confirmation-header .icon {
+    font-size: 70px;
     color: #28a745;
     margin-bottom: 20px;
-  }
-  
-  h1 {
-    font-size: 28px;
+}
+
+/* Header Text */
+.confirmation-header h1 {
+    font-size: 32px;
+    font-weight: bold;
     margin-bottom: 10px;
-  }
-  
-  p {
+    color: #333;
+}
+
+.confirmation-header p {
+    font-size: 18px;
     color: #555;
     margin-bottom: 20px;
-  }
-  
-  .summary {
+}
+
+/* Order Details */
+.confirmation-details {
+    margin-top: 20px;
     text-align: left;
+    font-size: 16px;
+    color: #555;
+}
+
+.confirmation-details p {
+    margin: 5px 0;
+}
+
+/* Order Summary */
+.order-summary {
     margin-top: 30px;
-  }
-  
-  .summary h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .summary ul {
+    text-align: left;
+}
+
+.order-summary h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.order-items {
     list-style: none;
     padding: 0;
-    margin-bottom: 10px;
-  }
-  
-  .summary ul li {
-    padding: 6px 0;
+    margin: 0;
+    border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
-  }
-  
-  .total {
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.item-quantity {
     font-weight: bold;
+    color: #333;
+}
+
+.item-name {
+    flex: 1;
+    margin-left: 10px;
+    color: #555;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Order Totals */
+.order-totals {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.grand-total {
     font-size: 18px;
+    font-weight: bold;
+    color: #333;
     margin-top: 10px;
-  }
-  
-  .actions {
+}
+
+/* Customer Details */
+.customer-details {
     margin-top: 30px;
-  }
-  
-  .btn {
+    text-align: left;
+    font-size: 16px;
+    color: #555;
+}
+
+.customer-details h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.customer-details p {
+    margin: 5px 0;
+}
+
+/* Actions */
+.actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn {
     text-decoration: none;
     background-color: #28a745;
     color: white;
     padding: 12px 25px;
     border-radius: 8px;
-    margin: 0 10px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn:hover {
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
     background-color: #218838;
-  }
-  
-  .btn-secondary {
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
     background-color: #007bff;
-  }
-  
-  .btn-secondary:hover {
+}
+
+.btn-secondary:hover {
     background-color: #0069d9;
-  }
-  
+}
+
+/* Error State */
+.error-state {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.error-state .icon {
+    font-size: 70px;
+    color: #f44336;
+    margin-bottom: 20px;
+}
+
+.error-state h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.error-state p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}

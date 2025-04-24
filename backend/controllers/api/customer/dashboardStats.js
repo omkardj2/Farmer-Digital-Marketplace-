@@ -4,11 +4,14 @@ const Wishlist = require('../../../models/wishlistModel');
 
 exports.getDashboardStats = async (req, res) => {
     try {
-        console.log(req.user);
         const userId = req.user.id;
 
         const totalOrders = await Order.countDocuments({ customer: userId });
-        const cartItems = await Cart.countDocuments({ customer: userId });
+        
+        // Get cart items count from the cart array
+        const cart = await Cart.findOne({ customer: userId });
+        const cartItems = cart ? cart.items.length : 0;
+        
         const wishlistItems = await Wishlist.countDocuments({ customer: userId });
 
         const totalSpent = await Order.aggregate([

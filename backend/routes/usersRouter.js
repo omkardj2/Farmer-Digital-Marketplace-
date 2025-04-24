@@ -9,8 +9,8 @@ const checkRole = require('../middlewares/checkRole');
 
 const customerInfo = require('../controllers/api/customer/customer-info');
 const customerOrders = require('../controllers/api/customer/customer-orders');
-const updateCustomerProfile = require('../controllers/api/customer/update-customer-profile')
-
+const updateCustomerProfile = require('../controllers/api/customer/update-customer-profile');
+const customerOrder = require('../controllers/api/customer/customerOrder');
 const createOrder = require('../controllers/api/customer/createOrder');
 const { getRecentOrders } = require('../controllers/api/customer/recentOrders');
 const { getDashboardStats } = require('../controllers/api/customer/dashboardStats');
@@ -31,6 +31,9 @@ router.get('/cart', getCart);
 router.delete('/cart/remove/:productId', removefromCart);
 
 router.post('/orders/create', createOrder);
+
+// Fix: Reference the correct function from the customerOrder object
+router.get('/orders/:orderId', customerOrder.getOrderDetails);
 
 // Route to fetch recent orders
 router.get('/recent-orders', getRecentOrders);

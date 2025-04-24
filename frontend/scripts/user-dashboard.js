@@ -1,6 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
     checkAuthAndLoadData();
     setupEventListeners();
+
+    // Navigate to the section specified in the hash (if present)
+    const hash = window.location.hash;
+    if (hash) {
+        const targetSection = document.querySelector(hash);
+        if (targetSection) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('active');
+            });
+            targetSection.style.display = 'block';
+            targetSection.classList.add('active');
+
+            // Update the active navigation item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`.nav-item[data-section="${hash.slice(1)}"]`)?.classList.add('active');
+        }
+    }
 });
 
 async function checkAuthAndLoadData() {
@@ -116,23 +136,74 @@ async function loadRecentOrders() {
         }
 
         const orders = await response.json();
+        console.log('Fetched orders:', orders); // Debugging log
 
-        if (!Array.isArray(orders)) {
-            throw new TypeError('Expected an array of orders');
+        if (!Array.isArray(orders) || orders.length === 0) {
+            document.getElementById('orders-table').querySelector('tbody').innerHTML = `
+                <tr>
+                    <td colspan="5" class="empty-orders">No orders found.</td>
+                </tr>
+            `;
+            return;
         }
 
-        console.log('Recent orders:', orders);
+        const ordersTableBody = document.getElementById('orders-table').querySelector('tbody');
+        ordersTableBody.innerHTML = orders.map(order => `
+            <tr>
+                <td>#${order._id.slice(-6).toUpperCase()}</td>
+                <td>${order.items.length} items</td>
+                <td>₹${order.total.toFixed(2)}</td>
+                <td>${order.status}</td>
+                <td>${new Date(order.date).toLocaleDateString()}</td>
+            </tr>
+        `).join('');
     } catch (error) {
         console.error('Failed to load recent orders:', error);
+        showToast('Failed to load recent orders', 'error');
+    }
+}
+
+// Add this function to handle cart item removal
+async function removeFromCart(productId) {
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/users/cart/remove/${productId}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to remove item');
+        }
+
+        // Refresh the cart items and dashboard stats
+        await Promise.all([
+            loadCartItems(),
+            loadDashboardStats()
+        ]);
+
+        showToast('Item removed from cart', 'success');
+    } catch (error) {
+        console.error('Error removing item:', error);
+        showToast('Failed to remove item from cart', 'error');
     }
 }
 
 async function loadCartItems() {
     try {
         const response = await fetch('http://127.0.0.1:3000/users/cart', {
+            method: 'GET',
             credentials: 'include'
         });
-        const items = await response.json();
+
+        if (!response.ok) {
+            throw new Error('Failed to load cart items');
+        }
+
+        const data = await response.json();
+        console.log('Cart response:', data); // Debug log
+
+        // Handle both array and object responses
+        const items = Array.isArray(data) ? data : (data.items || []);
 
         const cartContainer = document.getElementById('cart-items');
         let subtotal = 0;
@@ -141,15 +212,21 @@ async function loadCartItems() {
             cartContainer.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
         } else {
             cartContainer.innerHTML = items.map(item => {
-                subtotal += item.price * item.quantity;
+                const itemPrice = item.product ? item.product.price : item.price;
+                const itemName = item.product ? item.product.name : item.name;
+                const itemImage = item.product ? item.product.image : item.image;
+                const itemId = item.product ? item.product._id : item._id;
+                
+                subtotal += itemPrice * item.quantity;
+                
                 return `
                     <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}">
+                        <img src="${itemImage}" alt="${itemName}" onerror="this.src='./images/default-product.jpg'">
                         <div class="item-details">
-                            <h4>${item.name}</h4>
-                            <p>₹${item.price.toFixed(2)} x ${item.quantity}</p>
+                            <h4>${itemName}</h4>
+                            <p>₹${itemPrice.toFixed(2)} x ${item.quantity}</p>
                         </div>
-                        <button onclick="removeFromCart('${item._id}')" class="remove-btn">
+                        <button onclick="removeFromCart('${itemId}')" class="remove-btn">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -157,7 +234,11 @@ async function loadCartItems() {
             }).join('');
         }
 
-        document.getElementById('cart-subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+        // Update subtotal if the element exists
+        const subtotalElement = document.getElementById('cart-subtotal');
+        if (subtotalElement) {
+            subtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
+        }
 
     } catch (error) {
         console.error('Failed to load cart items:', error);
